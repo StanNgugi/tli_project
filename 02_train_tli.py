@@ -3,7 +3,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, get_linear_schedule_with_warmup
+# ADDED AutoConfig here
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, get_linear_schedule_with_warmup, AutoConfig 
 from peft import get_peft_model, LoraConfig, TaskType
 import json
 import random
@@ -19,7 +20,7 @@ class TrainingConfig:
     WORD_PAIRS_PATH = "./data/word_pairs.json"
     
     # Determined from 01_pilot_layer_selection.py
-    TARGET_LAYER = 2  # 🎯 IMPORTANT: UPDATE THIS with the output from the pilot script (e.g., 18 or 20)
+    TARGET_LAYER = 2  # 🎯 IMPORTANT: This should now be 2, as identified by the pilot script.
     
     # LoRA Parameters
     LORA_R = 16
@@ -161,6 +162,27 @@ def main():
 
     # 1. Load Model and Tokenizer
     logging.info(f"Loading base model: {config.MODEL_ID}")
+    
+    # --- START ROBUST CONFIG LOADING & PATCHING (COPIED FROM 01_pilot_layer_selection.py) ---
+    # Load the configuration first
+    model_config = AutoConfig.from_pretrained(config.MODEL_ID)
+
+    # Apply the rope_scaling patch if necessary
+    if hasattr(model_config, "rope_scaling") and isinstance(model_config.rope_scaling, dict):
+        if "type" not in model_config.rope_scaling:
+            logging.warning("`rope_scaling` in model config is missing 'type' key. Patching to 'linear' as a workaround.")
+            model_config.rope_scaling["type"] = "linear" # Default to 'linear' if 'type' is missing
+        
+        # Ensure 'factor' is also present, as it's typically required with 'type'
+        if "factor" not in model_config.rope_scaling:
+            logging.warning("`rope_scaling` in model config is missing 'factor' key. Patching to 1.0 as a workaround.")
+            model_config.rope_scaling["factor"] = 1.0 # Default factor if missing
+
+        logging.info(f"Final `rope_scaling` config after potential patch: {model_config.rope_scaling}")
+    else:
+        logging.info("`rope_scaling` attribute not found or not a dictionary in model config. No patch applied.")
+    # --- END ROBUST CONFIG LOADING & PATCHING ---
+
     quantization_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
@@ -169,12 +191,15 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(config.MODEL_ID)
     model = AutoModelForCausalLM.from_pretrained(
         config.MODEL_ID,
+        config=model_config, # Pass the potentially modified config
         quantization_config=quantization_config,
         device_map="auto"
     )
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
         model.config.pad_token_id = tokenizer.eos_token_id
+
+    logging.info(f"Model loaded with {model.config.num_hidden_layers} layers.") # Added this logging line for clarity
 
     # 2. Configure and Apply LoRA
     logging.info("Configuring LoRA adapters...")
