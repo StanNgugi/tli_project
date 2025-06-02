@@ -1,13 +1,15 @@
 # 05_qualitative_probing.py
 import torch
-from transformers import AutoTokenizer, BitsAndBytesConfig
+import torch.nn.functional as F # Although not directly used, keeping if other helpers need it
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, AutoConfig
+from peft import PeftModel
 import json
 import random
 import os
 import logging
 
-# Import helper function from the shared utilities file
-from utils import load_model
+# Setup basic logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # --- Configuration ---
 class ProbeConfig:
@@ -29,8 +31,58 @@ class ProbeConfig:
     OUTPUT_DIR = "./results/evaluation"
     PROBE_RESULTS_PATH = os.path.join(OUTPUT_DIR, "qualitative_probe_results.md")
 
-# Setup basic logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+# --- Helper Functions (Copied directly for self-contained execution) ---
+
+def load_model(model_id, quantization_config, adapter_path=None):
+    """
+    Loads the base model, and optionally merges LoRA adapters if adapter_path is provided.
+    Handles rope_scaling config patching and sets pad_token_id.
+    """
+    logging.info(f"Loading model: {model_id} (Adapters: {adapter_path if adapter_path else 'None'})")
+
+    model_config = AutoConfig.from_pretrained(model_id)
+
+    if hasattr(model_config, "rope_scaling") and isinstance(model_config.rope_scaling, dict):
+        if "type" not in model_config.rope_scaling:
+            logging.warning("`rope_scaling` in model config is missing 'type' key. Patching to 'linear' as a workaround.")
+            model_config.rope_scaling["type"] = "linear"
+        if "factor" not in model_config.rope_scaling:
+            logging.warning("`rope_scaling` in model config is missing 'factor' key. Patching to 1.0 as a workaround.")
+            model_config.rope_scaling["factor"] = 1.0
+        logging.info(f"Final `rope_scaling` config after potential patch: {model_config.rope_scaling}")
+    else:
+        logging.info("`rope_scaling` attribute not found or not a dictionary in model config. No patch applied.")
+
+    model = AutoModelForCausalLM.from_pretrained(
+        model_id,
+        config=model_config,
+        quantization_config=quantization_config,
+        device_map="auto"
+    )
+
+    if adapter_path:
+        logging.info(f"Loading and merging LoRA adapters from {adapter_path}...")
+        if not os.path.exists(adapter_path):
+            logging.error(f"Error: LoRA adapter path '{adapter_path}' does not exist.")
+            logging.warning("Proceeding with base model as adapters could not be loaded/merged.")
+            adapter_path = None # Mark as not loaded
+        else:
+            try:
+                model = PeftModel.from_pretrained(model, adapter_path)
+                model = model.merge_and_unload()
+                logging.info("LoRA adapters merged successfully.")
+            except Exception as e:
+                logging.error(f"Error merging LoRA adapters from '{adapter_path}': {e}")
+                logging.warning("Proceeding with base model as adapters could not be loaded/merged.")
+                adapter_path = None
+
+    tokenizer = AutoTokenizer.from_pretrained(model_id)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+        model.config.pad_token_id = tokenizer.eos_token_id
+
+    model.eval()
+    return model, tokenizer
 
 # --- Main Script ---
 def generate_response(prompt, model, tokenizer, config):
@@ -58,17 +110,15 @@ def main():
     os.makedirs(config.OUTPUT_DIR, exist_ok=True)
     random.seed(config.RANDOM_STATE) # Set seed for random sample selection
 
-    logging.info("--- Phase 3: Qualitative Probing ---")
+    logging.info("--- Phase 5: Qualitative Probing ---") # Changed phase number
 
     # 1. Load Models and Tokenizer
     quant_config = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_compute_dtype=torch.bfloat16)
     
-    logging.info("Loading base and TLI models for probing...")
-    base_model = load_model(config.MODEL_ID, quant_config)
-    tli_model = load_model(config.MODEL_ID, quant_config, adapter_path=config.ADAPTER_PATH)
-
-    tokenizer = AutoTokenizer.from_pretrained(config.MODEL_ID)
-    if tokenizer.pad_token is None: tokenizer.pad_token = tokenizer.eos_token
+    logging.info("Loading base model for probing...")
+    base_model, tokenizer = load_model(config.MODEL_ID, quant_config) # Use tokenizer from base load
+    logging.info("Loading TLI-tuned model for probing...")
+    tli_model, _ = load_model(config.MODEL_ID, quant_config, adapter_path=config.ADAPTER_PATH) # No need for second tokenizer
 
     # 2. Select words and define prompt templates
     try:
