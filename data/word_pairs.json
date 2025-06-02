@@ -1,0 +1,2494 @@
+[
+    {
+        "swahili": "-anana",
+        "english": "thin"
+    },
+    {
+        "swahili": "-bovu",
+        "english": "rotten"
+    },
+    {
+        "swahili": "-chafuka",
+        "english": "rough"
+    },
+    {
+        "swahili": "-embamba",
+        "english": "narrow"
+    },
+    {
+        "swahili": "-fupi",
+        "english": "short"
+    },
+    {
+        "swahili": "-ingine",
+        "english": "other"
+    },
+    {
+        "swahili": "-kavu",
+        "english": "dry"
+    },
+    {
+        "swahili": "-nene",
+        "english": "thick"
+    },
+    {
+        "swahili": "-ororo",
+        "english": "smooth"
+    },
+    {
+        "swahili": "-ote",
+        "english": "all"
+    },
+    {
+        "swahili": "-pana",
+        "english": "wide"
+    },
+    {
+        "swahili": "-refu",
+        "english": "long"
+    },
+    {
+        "swahili": "-zito",
+        "english": "heavy"
+    },
+    {
+        "swahili": "Agosti",
+        "english": "August"
+    },
+    {
+        "swahili": "Alhamisi",
+        "english": "Thursday"
+    },
+    {
+        "swahili": "Aprili",
+        "english": "April"
+    },
+    {
+        "swahili": "Desemba",
+        "english": "December"
+    },
+    {
+        "swahili": "Februari",
+        "english": "February"
+    },
+    {
+        "swahili": "Ijumaa",
+        "english": "Friday"
+    },
+    {
+        "swahili": "Januari",
+        "english": "January"
+    },
+    {
+        "swahili": "Julai",
+        "english": "July"
+    },
+    {
+        "swahili": "Jumamosi",
+        "english": "Saturday"
+    },
+    {
+        "swahili": "Jumanne",
+        "english": "Tuesday"
+    },
+    {
+        "swahili": "Jumapili",
+        "english": "Sunday"
+    },
+    {
+        "swahili": "Jumatano",
+        "english": "Wednesday"
+    },
+    {
+        "swahili": "Jumatatu",
+        "english": "Monday"
+    },
+    {
+        "swahili": "Juni",
+        "english": "June"
+    },
+    {
+        "swahili": "Kamba",
+        "english": "rope"
+    },
+    {
+        "swahili": "Machi",
+        "english": "March"
+    },
+    {
+        "swahili": "Mei",
+        "english": "May"
+    },
+    {
+        "swahili": "Novemba",
+        "english": "November"
+    },
+    {
+        "swahili": "Oktoba",
+        "english": "October"
+    },
+    {
+        "swahili": "Septemba",
+        "english": "September"
+    },
+    {
+        "swahili": "afya",
+        "english": "health"
+    },
+    {
+        "swahili": "amani",
+        "english": "peace"
+    },
+    {
+        "swahili": "anga",
+        "english": "sky"
+    },
+    {
+        "swahili": "arobaini",
+        "english": "forty"
+    },
+    {
+        "swahili": "asante",
+        "english": "thank you"
+    },
+    {
+        "swahili": "asante sana",
+        "english": "thank you very much"
+    },
+    {
+        "swahili": "askari",
+        "english": "soldier/police officer"
+    },
+    {
+        "swahili": "asubuhi",
+        "english": "morning"
+    },
+    {
+        "swahili": "au",
+        "english": "or"
+    },
+    {
+        "swahili": "baba",
+        "english": "father"
+    },
+    {
+        "swahili": "baada ya",
+        "english": "after"
+    },
+    {
+        "swahili": "baadaye",
+        "english": "later"
+    },
+    {
+        "swahili": "bafu",
+        "english": "bathroom"
+    },
+    {
+        "swahili": "bahari",
+        "english": "ocean"
+    },
+    {
+        "swahili": "bahari",
+        "english": "sea"
+    },
+    {
+        "swahili": "bahati",
+        "english": "luck"
+    },
+    {
+        "swahili": "bahati mbaya",
+        "english": "bad luck"
+    },
+    {
+        "swahili": "bara",
+        "english": "mainland"
+    },
+    {
+        "swahili": "barafu",
+        "english": "ice"
+    },
+    {
+        "swahili": "barabara",
+        "english": "road"
+    },
+    {
+        "swahili": "baridi",
+        "english": "cold"
+    },
+    {
+        "swahili": "barua",
+        "english": "letter"
+    },
+    {
+        "swahili": "basi",
+        "english": "bus"
+    },
+    {
+        "swahili": "bei",
+        "english": "price"
+    },
+    {
+        "swahili": "bei gani",
+        "english": "how much does it cost"
+    },
+    {
+        "swahili": "benki",
+        "english": "bank"
+    },
+    {
+        "swahili": "bia",
+        "english": "beer"
+    },
+    {
+        "swahili": "bili",
+        "english": "bill"
+    },
+    {
+        "swahili": "bilioni",
+        "english": "billion"
+    },
+    {
+        "swahili": "binti",
+        "english": "daughter"
+    },
+    {
+        "swahili": "bluu",
+        "english": "blue"
+    },
+    {
+        "swahili": "bonde",
+        "english": "valley"
+    },
+    {
+        "swahili": "boti",
+        "english": "boat"
+    },
+    {
+        "swahili": "bustani",
+        "english": "garden"
+    },
+    {
+        "swahili": "bustani",
+        "english": "garden/park"
+    },
+    {
+        "swahili": "butu",
+        "english": "blunt"
+    },
+    {
+        "swahili": "bwana",
+        "english": "sir"
+    },
+    {
+        "swahili": "chai",
+        "english": "tea"
+    },
+    {
+        "swahili": "chakula",
+        "english": "food"
+    },
+    {
+        "swahili": "chakula cha asubuhi",
+        "english": "breakfast"
+    },
+    {
+        "swahili": "chakula cha jioni",
+        "english": "dinner"
+    },
+    {
+        "swahili": "chakula cha mchana",
+        "english": "lunch"
+    },
+    {
+        "swahili": "chachu",
+        "english": "sour"
+    },
+    {
+        "swahili": "chafu",
+        "english": "dirty"
+    },
+    {
+        "swahili": "chemchemi",
+        "english": "spring"
+    },
+    {
+        "swahili": "chini",
+        "english": "down"
+    },
+    {
+        "swahili": "choo",
+        "english": "toilet"
+    },
+    {
+        "swahili": "choo",
+        "english": "toilet/bathroom"
+    },
+    {
+        "swahili": "chuki",
+        "english": "hatred"
+    },
+    {
+        "swahili": "chui",
+        "english": "leopard"
+    },
+    {
+        "swahili": "chumvi",
+        "english": "salt"
+    },
+    {
+        "swahili": "chungwa",
+        "english": "orange"
+    },
+    {
+        "swahili": "chungwa",
+        "english": "orange (fruit)"
+    },
+    {
+        "swahili": "dada",
+        "english": "sister"
+    },
+    {
+        "swahili": "daftari",
+        "english": "notebook"
+    },
+    {
+        "swahili": "dakika",
+        "english": "minute"
+    },
+    {
+        "swahili": "daktari",
+        "english": "doctor"
+    },
+    {
+        "swahili": "damu",
+        "english": "blood"
+    },
+    {
+        "swahili": "daraja",
+        "english": "bridge"
+    },
+    {
+        "swahili": "darasa",
+        "english": "class"
+    },
+    {
+        "swahili": "dereva",
+        "english": "driver"
+    },
+    {
+        "swahili": "dhahabu",
+        "english": "gold"
+    },
+    {
+        "swahili": "dirisha",
+        "english": "window"
+    },
+    {
+        "swahili": "dhoruba",
+        "english": "storm"
+    },
+    {
+        "swahili": "duka",
+        "english": "shop"
+    },
+    {
+        "swahili": "duma",
+        "english": "cheetah"
+    },
+    {
+        "swahili": "dunia",
+        "english": "world"
+    },
+    {
+        "swahili": "elfu",
+        "english": "thousand"
+    },
+    {
+        "swahili": "embe",
+        "english": "mango"
+    },
+    {
+        "swahili": "familia",
+        "english": "family"
+    },
+    {
+        "swahili": "farasi",
+        "english": "horse"
+    },
+    {
+        "swahili": "fedha",
+        "english": "silver"
+    },
+    {
+        "swahili": "filamu",
+        "english": "film"
+    },
+    {
+        "swahili": "fupi",
+        "english": "short"
+    },
+    {
+        "swahili": "furaha",
+        "english": "happy"
+    },
+    {
+        "swahili": "gari",
+        "english": "car"
+    },
+    {
+        "swahili": "gazeti",
+        "english": "newspaper"
+    },
+    {
+        "swahili": "gani",
+        "english": "which"
+    },
+    {
+        "swahili": "ghali",
+        "english": "expensive"
+    },
+    {
+        "swahili": "ghuba",
+        "english": "bay"
+    },
+    {
+        "swahili": "gonjwa",
+        "english": "sick"
+    },
+    {
+        "swahili": "haba na haba hujaza",
+        "english": "little by little fills the measure"
+    },
+    {
+        "swahili": "habari",
+        "english": "news"
+    },
+    {
+        "swahili": "habari gani",
+        "english": "how are you"
+    },
+    {
+        "swahili": "habari yako",
+        "english": "how are you"
+    },
+    {
+        "swahili": "hajambo",
+        "english": "he/she is fine"
+    },
+    {
+        "swahili": "hakuna matata",
+        "english": "no worries"
+    },
+    {
+        "swahili": "hakuna matata",
+        "english": "no worries/problems"
+    },
+    {
+        "swahili": "hamna shida",
+        "english": "no problem"
+    },
+    {
+        "swahili": "hamsini",
+        "english": "fifty"
+    },
+    {
+        "swahili": "hapana",
+        "english": "no"
+    },
+    {
+        "swahili": "hapa",
+        "english": "here"
+    },
+    {
+        "swahili": "haraka",
+        "english": "fast"
+    },
+    {
+        "swahili": "haraka",
+        "english": "hurry"
+    },
+    {
+        "swahili": "haraka haraka",
+        "english": "quickly"
+    },
+    {
+        "swahili": "haraka haraka haina baraka",
+        "english": "hurry has no blessing"
+    },
+    {
+        "swahili": "hatujambo",
+        "english": "we are fine"
+    },
+    {
+        "swahili": "hawajambo",
+        "english": "they are fine"
+    },
+    {
+        "swahili": "hodi",
+        "english": "may I come in"
+    },
+    {
+        "swahili": "hodi",
+        "english": "welcome/come in"
+    },
+    {
+        "swahili": "hospitali",
+        "english": "hospital"
+    },
+    {
+        "swahili": "hoteli",
+        "english": "hotel"
+    },
+    {
+        "swahili": "hudhurungi",
+        "english": "orange (color)"
+    },
+    {
+        "swahili": "huzuni",
+        "english": "sad"
+    },
+    {
+        "swahili": "huzuni",
+        "english": "sadness"
+    },
+    {
+        "swahili": "iko wapi",
+        "english": "where is"
+    },
+    {
+        "swahili": "inatosha",
+        "english": "enough"
+    },
+    {
+        "swahili": "ishirini",
+        "english": "twenty"
+    },
+    {
+        "swahili": "ishirini na tatu",
+        "english": "twenty-three"
+    },
+    {
+        "swahili": "jambo",
+        "english": "hello"
+    },
+    {
+        "swahili": "jamaa",
+        "english": "relative"
+    },
+    {
+        "swahili": "jamii",
+        "english": "family"
+    },
+    {
+        "swahili": "jana",
+        "english": "yesterday"
+    },
+    {
+        "swahili": "jangwa",
+        "english": "desert"
+    },
+    {
+        "swahili": "jarida",
+        "english": "magazine"
+    },
+    {
+        "swahili": "jibu",
+        "english": "answer"
+    },
+    {
+        "swahili": "jibini",
+        "english": "cheese"
+    },
+    {
+        "swahili": "jiko",
+        "english": "kitchen"
+    },
+    {
+        "swahili": "jina",
+        "english": "name"
+    },
+    {
+        "swahili": "jina langu ni",
+        "english": "my name is"
+    },
+    {
+        "swahili": "jina lako ni nani",
+        "english": "what is your name"
+    },
+    {
+        "swahili": "jiwe",
+        "english": "stone"
+    },
+    {
+        "swahili": "jioni",
+        "english": "evening"
+    },
+    {
+        "swahili": "joto",
+        "english": "heat"
+    },
+    {
+        "swahili": "joto",
+        "english": "hot"
+    },
+    {
+        "swahili": "jua",
+        "english": "sun"
+    },
+    {
+        "swahili": "juu",
+        "english": "up"
+    },
+    {
+        "swahili": "kadi",
+        "english": "card"
+    },
+    {
+        "swahili": "kadi ya benki",
+        "english": "debit card"
+    },
+    {
+        "swahili": "kahawa",
+        "english": "coffee"
+    },
+    {
+        "swahili": "kahawia",
+        "english": "brown"
+    },
+    {
+        "swahili": "kaka",
+        "english": "brother"
+    },
+    {
+        "swahili": "kaka",
+        "english": "older brother"
+    },
+    {
+        "swahili": "kalamu",
+        "english": "pen"
+    },
+    {
+        "swahili": "kali",
+        "english": "sharp/fierce"
+    },
+    {
+        "swahili": "kali",
+        "english": "spicy"
+    },
+    {
+        "swahili": "kama",
+        "english": "if"
+    },
+    {
+        "swahili": "kanga",
+        "english": "guinea fowl"
+    },
+    {
+        "swahili": "kanga",
+        "english": "piece of cloth"
+    },
+    {
+        "swahili": "kanga",
+        "english": "piece of cloth worn by a woman"
+    },
+    {
+        "swahili": "kanisa",
+        "english": "church"
+    },
+    {
+        "swahili": "karatasi",
+        "english": "paper"
+    },
+    {
+        "swahili": "karibu",
+        "english": "near"
+    },
+    {
+        "swahili": "karibu",
+        "english": "welcome"
+    },
+    {
+        "swahili": "karibu",
+        "english": "welcome/come in"
+    },
+    {
+        "swahili": "karoti",
+        "english": "carrot"
+    },
+    {
+        "swahili": "kaskazini",
+        "english": "north"
+    },
+    {
+        "swahili": "kati",
+        "english": "middle"
+    },
+    {
+        "swahili": "katikati",
+        "english": "center"
+    },
+    {
+        "swahili": "kazi",
+        "english": "work"
+    },
+    {
+        "swahili": "kesho",
+        "english": "tomorrow"
+    },
+    {
+        "swahili": "kichwa",
+        "english": "head"
+    },
+    {
+        "swahili": "kidogo",
+        "english": "little/few"
+    },
+    {
+        "swahili": "kifaru",
+        "english": "rhinoceros"
+    },
+    {
+        "swahili": "kifo",
+        "english": "death"
+    },
+    {
+        "swahili": "kijana",
+        "english": "young person"
+    },
+    {
+        "swahili": "kijani",
+        "english": "green"
+    },
+    {
+        "swahili": "kijiji",
+        "english": "village"
+    },
+    {
+        "swahili": "kijivu",
+        "english": "gray"
+    },
+    {
+        "swahili": "kilima",
+        "english": "hill"
+    },
+    {
+        "swahili": "kimbunga",
+        "english": "storm"
+    },
+    {
+        "swahili": "kimya",
+        "english": "quiet"
+    },
+    {
+        "swahili": "kinamasi",
+        "english": "swamp"
+    },
+    {
+        "swahili": "kingi",
+        "english": "many"
+    },
+    {
+        "swahili": "kinywaji",
+        "english": "beverage"
+    },
+    {
+        "swahili": "kinywaji",
+        "english": "drink"
+    },
+    {
+        "swahili": "kioo",
+        "english": "mirror"
+    },
+    {
+        "swahili": "kisichana",
+        "english": "girl"
+    },
+    {
+        "swahili": "kisima",
+        "english": "well"
+    },
+    {
+        "swahili": "kishindo",
+        "english": "noisy"
+    },
+    {
+        "swahili": "kitabu",
+        "english": "book"
+    },
+    {
+        "swahili": "kitanda",
+        "english": "bed"
+    },
+    {
+        "swahili": "kiti",
+        "english": "chair"
+    },
+    {
+        "swahili": "kitunguu",
+        "english": "onion"
+    },
+    {
+        "swahili": "kituo cha basi",
+        "english": "bus station"
+    },
+    {
+        "swahili": "kiu",
+        "english": "thirst"
+    },
+    {
+        "swahili": "kiazi",
+        "english": "potato"
+    },
+    {
+        "swahili": "kioga",
+        "english": "shower"
+    },
+    {
+        "swahili": "kiyoyozi",
+        "english": "air conditioner"
+    },
+    {
+        "swahili": "kodi",
+        "english": "tax"
+    },
+    {
+        "swahili": "kofia",
+        "english": "hat"
+    },
+    {
+        "swahili": "kompyuta",
+        "english": "computer"
+    },
+    {
+        "swahili": "kompyuta ndogo",
+        "english": "laptop"
+    },
+    {
+        "swahili": "kubwa",
+        "english": "big"
+    },
+    {
+        "swahili": "kubwa",
+        "english": "large"
+    },
+    {
+        "swahili": "kuchukua",
+        "english": "to take"
+    },
+    {
+        "swahili": "kufa",
+        "english": "to die"
+    },
+    {
+        "swahili": "kufanya",
+        "english": "to do/make"
+    },
+    {
+        "swahili": "kuficha",
+        "english": "to hide"
+    },
+    {
+        "swahili": "kufunga",
+        "english": "to close"
+    },
+    {
+        "swahili": "kufundisha",
+        "english": "to teach"
+    },
+    {
+        "swahili": "kufungua",
+        "english": "to open"
+    },
+    {
+        "swahili": "kugusa",
+        "english": "to touch"
+    },
+    {
+        "swahili": "kuhesabu",
+        "english": "to count"
+    },
+    {
+        "swahili": "kuimba",
+        "english": "to sing"
+    },
+    {
+        "swahili": "kuishi",
+        "english": "to live"
+    },
+    {
+        "swahili": "kuja",
+        "english": "to come"
+    },
+    {
+        "swahili": "kujenga",
+        "english": "to build"
+    },
+    {
+        "swahili": "kujibu",
+        "english": "to answer"
+    },
+    {
+        "swahili": "kujifunza",
+        "english": "to learn"
+    },
+    {
+        "swahili": "kujua",
+        "english": "to know"
+    },
+    {
+        "swahili": "kukaa",
+        "english": "to sit"
+    },
+    {
+        "swahili": "kukimbia",
+        "english": "to run"
+    },
+    {
+        "swahili": "kukumbuka",
+        "english": "to remember"
+    },
+    {
+        "swahili": "kula",
+        "english": "to eat"
+    },
+    {
+        "swahili": "kulala",
+        "english": "to sleep"
+    },
+    {
+        "swahili": "kulia",
+        "english": "right"
+    },
+    {
+        "swahili": "kulia",
+        "english": "to cry"
+    },
+    {
+        "swahili": "kulipa",
+        "english": "to pay"
+    },
+    {
+        "swahili": "kumaliza",
+        "english": "to finish"
+    },
+    {
+        "swahili": "kumwaga",
+        "english": "to pour out"
+    },
+    {
+        "swahili": "kununua",
+        "english": "to buy"
+    },
+    {
+        "swahili": "kunusa",
+        "english": "to smell"
+    },
+    {
+        "swahili": "kunywa",
+        "english": "to drink"
+    },
+    {
+        "swahili": "kunyoa",
+        "english": "to shave"
+    },
+    {
+        "swahili": "kuogelea",
+        "english": "to swim"
+    },
+    {
+        "swahili": "kuogopa",
+        "english": "to fear"
+    },
+    {
+        "swahili": "kuomba",
+        "english": "I would like"
+    },
+    {
+        "swahili": "kuomba",
+        "english": "to ask for"
+    },
+    {
+        "swahili": "kuomba",
+        "english": "to beg/pray"
+    },
+    {
+        "swahili": "kuonja",
+        "english": "to taste"
+    },
+    {
+        "swahili": "kuona",
+        "english": "to see"
+    },
+    {
+        "swahili": "kuondoka",
+        "english": "to depart"
+    },
+    {
+        "swahili": "kuongeza",
+        "english": "to add"
+    },
+    {
+        "swahili": "kuonyesha",
+        "english": "to show"
+    },
+    {
+        "swahili": "kupanda",
+        "english": "to climb"
+    },
+    {
+        "swahili": "kupanda",
+        "english": "to climb/ascend"
+    },
+    {
+        "swahili": "kupata",
+        "english": "to find/get"
+    },
+    {
+        "swahili": "kupata",
+        "english": "to get"
+    },
+    {
+        "swahili": "kupenda",
+        "english": "to like/love"
+    },
+    {
+        "swahili": "kupenda",
+        "english": "to love"
+    },
+    {
+        "swahili": "kupika",
+        "english": "to cook"
+    },
+    {
+        "swahili": "kupokea",
+        "english": "to receive"
+    },
+    {
+        "swahili": "kupoteza",
+        "english": "to lose"
+    },
+    {
+        "swahili": "kupoteza",
+        "english": "to lose (a game/item)"
+    },
+    {
+        "swahili": "kupongeza",
+        "english": "to congratulate"
+    },
+    {
+        "swahili": "kupunguza",
+        "english": "to reduce"
+    },
+    {
+        "swahili": "kupoteya njia ndiyo kujua njia",
+        "english": "to get lost is to learn the way"
+    },
+    {
+        "swahili": "kura",
+        "english": "vote"
+    },
+    {
+        "swahili": "kuruka",
+        "english": "to fly/jump"
+    },
+    {
+        "swahili": "kuruka",
+        "english": "to jump"
+    },
+    {
+        "swahili": "kuruhusu",
+        "english": "to allow"
+    },
+    {
+        "swahili": "kusahau",
+        "english": "to forget"
+    },
+    {
+        "swahili": "kusaidia",
+        "english": "to help"
+    },
+    {
+        "swahili": "kusafisha",
+        "english": "to clean"
+    },
+    {
+        "swahili": "kusafiri",
+        "english": "to travel"
+    },
+    {
+        "swahili": "kusema",
+        "english": "to speak"
+    },
+    {
+        "swahili": "kusema",
+        "english": "to speak/say"
+    },
+    {
+        "swahili": "kushangaa",
+        "english": "to be surprised"
+    },
+    {
+        "swahili": "kushauri",
+        "english": "to advise"
+    },
+    {
+        "swahili": "kushauri",
+        "english": "to consult"
+    },
+    {
+        "swahili": "kushika",
+        "english": "to hold"
+    },
+    {
+        "swahili": "kushindwa",
+        "english": "to fail"
+    },
+    {
+        "swahili": "kushinda",
+        "english": "to win"
+    },
+    {
+        "swahili": "kushona",
+        "english": "to sew"
+    },
+    {
+        "swahili": "kushoto",
+        "english": "left"
+    },
+    {
+        "swahili": "kushukuru",
+        "english": "to thank"
+    },
+    {
+        "swahili": "kushuka",
+        "english": "to descend"
+    },
+    {
+        "swahili": "kusikia",
+        "english": "to hear"
+    },
+    {
+        "swahili": "kusini",
+        "english": "south"
+    },
+    {
+        "swahili": "kusoma",
+        "english": "to read"
+    },
+    {
+        "swahili": "kusubiri",
+        "english": "to wait"
+    },
+    {
+        "swahili": "kutabasamu",
+        "english": "to smile"
+    },
+    {
+        "swahili": "kutafuta",
+        "english": "to search"
+    },
+    {
+        "swahili": "kutaka",
+        "english": "to want"
+    },
+    {
+        "swahili": "kutembea",
+        "english": "to walk"
+    },
+    {
+        "swahili": "kutenganisha",
+        "english": "to separate"
+    },
+    {
+        "swahili": "kutoelewa",
+        "english": "to misunderstand"
+    },
+    {
+        "swahili": "kutoka",
+        "english": "to exit"
+    },
+    {
+        "swahili": "kutoka",
+        "english": "to exit/come from"
+    },
+    {
+        "swahili": "kutoa",
+        "english": "to give"
+    },
+    {
+        "swahili": "kutoa",
+        "english": "to give out"
+    },
+    {
+        "swahili": "kutoa",
+        "english": "to remove"
+    },
+    {
+        "swahili": "kutoa",
+        "english": "to subtract"
+    },
+    {
+        "swahili": "kutupa",
+        "english": "to throw"
+    },
+    {
+        "swahili": "kuuliza",
+        "english": "to ask"
+    },
+    {
+        "swahili": "kuvaa",
+        "english": "to wear"
+    },
+    {
+        "swahili": "kuvua",
+        "english": "to take off clothes"
+    },
+    {
+        "swahili": "kuvua",
+        "english": "to undress"
+    },
+    {
+        "swahili": "kuvunja",
+        "english": "to break"
+    },
+    {
+        "swahili": "kuvutia",
+        "english": "interesting"
+    },
+    {
+        "swahili": "kuwa",
+        "english": "to be"
+    },
+    {
+        "swahili": "kwaheri",
+        "english": "goodbye"
+    },
+    {
+        "swahili": "kwa nini",
+        "english": "why"
+    },
+    {
+        "swahili": "kwenda",
+        "english": "to go"
+    },
+    {
+        "swahili": "kwanza",
+        "english": "first"
+    },
+    {
+        "swahili": "labda",
+        "english": "maybe"
+    },
+    {
+        "swahili": "laini",
+        "english": "soft"
+    },
+    {
+        "swahili": "lazima",
+        "english": "necessary"
+    },
+    {
+        "swahili": "leo",
+        "english": "today"
+    },
+    {
+        "swahili": "likizo",
+        "english": "holiday/vacation"
+    },
+    {
+        "swahili": "lini",
+        "english": "when"
+    },
+    {
+        "swahili": "macho",
+        "english": "eyes"
+    },
+    {
+        "swahili": "magharibi",
+        "english": "west"
+    },
+    {
+        "swahili": "mahindi",
+        "english": "corn"
+    },
+    {
+        "swahili": "maisha",
+        "english": "life"
+    },
+    {
+        "swahili": "maisha marefu",
+        "english": "long life"
+    },
+    {
+        "swahili": "maji",
+        "english": "water"
+    },
+    {
+        "swahili": "maji kujaa",
+        "english": "high tide"
+    },
+    {
+        "swahili": "maji kujaa na kupwa",
+        "english": "tide"
+    },
+    {
+        "swahili": "maji kupwa",
+        "english": "low tide"
+    },
+    {
+        "swahili": "mama",
+        "english": "mother"
+    },
+    {
+        "swahili": "mambo",
+        "english": "what's up"
+    },
+    {
+        "swahili": "mandazi",
+        "english": "fried dough"
+    },
+    {
+        "swahili": "mapema",
+        "english": "early"
+    },
+    {
+        "swahili": "maporomoko",
+        "english": "waterfall"
+    },
+    {
+        "swahili": "marehemu",
+        "english": "late/deceased"
+    },
+    {
+        "swahili": "mashariki",
+        "english": "east"
+    },
+    {
+        "swahili": "matope",
+        "english": "mud"
+    },
+    {
+        "swahili": "matunda",
+        "english": "fruit"
+    },
+    {
+        "swahili": "matunda",
+        "english": "fruits"
+    },
+    {
+        "swahili": "maua",
+        "english": "flowers"
+    },
+    {
+        "swahili": "mawingu",
+        "english": "clouds"
+    },
+    {
+        "swahili": "maziwa",
+        "english": "milk"
+    },
+    {
+        "swahili": "mbaya",
+        "english": "bad"
+    },
+    {
+        "swahili": "mbingu",
+        "english": "sky"
+    },
+    {
+        "swahili": "mbili",
+        "english": "two"
+    },
+    {
+        "swahili": "mboga",
+        "english": "vegetable"
+    },
+    {
+        "swahili": "mboga",
+        "english": "vegetables"
+    },
+    {
+        "swahili": "mbwa",
+        "english": "dog"
+    },
+    {
+        "swahili": "mchanga",
+        "english": "sand"
+    },
+    {
+        "swahili": "mchana",
+        "english": "afternoon"
+    },
+    {
+        "swahili": "meza",
+        "english": "table"
+    },
+    {
+        "swahili": "mfanyabiashara",
+        "english": "businessman/woman"
+    },
+    {
+        "swahili": "mgeni",
+        "english": "guest"
+    },
+    {
+        "swahili": "miguu",
+        "english": "feet"
+    },
+    {
+        "swahili": "mia",
+        "english": "hundred"
+    },
+    {
+        "swahili": "mia mbili",
+        "english": "two hundred"
+    },
+    {
+        "swahili": "mia mbili na hamsini",
+        "english": "two hundred fifty"
+    },
+    {
+        "swahili": "mia na mbili",
+        "english": "one hundred two"
+    },
+    {
+        "swahili": "mikono",
+        "english": "hands"
+    },
+    {
+        "swahili": "milioni",
+        "english": "million"
+    },
+    {
+        "swahili": "mimi",
+        "english": "I"
+    },
+    {
+        "swahili": "mimi",
+        "english": "me"
+    },
+    {
+        "swahili": "mimi ni",
+        "english": "my name is"
+    },
+    {
+        "swahili": "mimi ni mwanafunzi",
+        "english": "I am a student"
+    },
+    {
+        "swahili": "mjini",
+        "english": "downtown"
+    },
+    {
+        "swahili": "mji",
+        "english": "city/town"
+    },
+    {
+        "swahili": "mkahawa",
+        "english": "cafe/restaurant"
+    },
+    {
+        "swahili": "mkate",
+        "english": "bread"
+    },
+    {
+        "swahili": "mkoba",
+        "english": "bag"
+    },
+    {
+        "swahili": "mkulima",
+        "english": "farmer"
+    },
+    {
+        "swahili": "mlango",
+        "english": "door"
+    },
+    {
+        "swahili": "mlima",
+        "english": "mountain"
+    },
+    {
+        "swahili": "moja",
+        "english": "one"
+    },
+    {
+        "swahili": "moto",
+        "english": "fire"
+    },
+    {
+        "swahili": "moto",
+        "english": "hot"
+    },
+    {
+        "swahili": "moyo",
+        "english": "heart"
+    },
+    {
+        "swahili": "mpishi",
+        "english": "cook"
+    },
+    {
+        "swahili": "mpya",
+        "english": "new"
+    },
+    {
+        "swahili": "mrembo",
+        "english": "beautiful"
+    },
+    {
+        "swahili": "msichana",
+        "english": "girl"
+    },
+    {
+        "swahili": "msikiti",
+        "english": "mosque"
+    },
+    {
+        "swahili": "msitu",
+        "english": "forest"
+    },
+    {
+        "swahili": "msitu",
+        "english": "woods"
+    },
+    {
+        "swahili": "mti",
+        "english": "tree"
+    },
+    {
+        "swahili": "mti",
+        "english": "wood"
+    },
+    {
+        "swahili": "mtoto",
+        "english": "child"
+    },
+    {
+        "swahili": "mtandao",
+        "english": "internet"
+    },
+    {
+        "swahili": "mto",
+        "english": "river"
+    },
+    {
+        "swahili": "muda",
+        "english": "time"
+    },
+    {
+        "swahili": "mume",
+        "english": "husband"
+    },
+    {
+        "swahili": "muhimu",
+        "english": "important"
+    },
+    {
+        "swahili": "muziki",
+        "english": "music"
+    },
+    {
+        "swahili": "mvua",
+        "english": "rain"
+    },
+    {
+        "swahili": "mvuvi",
+        "english": "fisherman"
+    },
+    {
+        "swahili": "mwalimu",
+        "english": "teacher"
+    },
+    {
+        "swahili": "mwana",
+        "english": "child"
+    },
+    {
+        "swahili": "mwana",
+        "english": "son"
+    },
+    {
+        "swahili": "mwanafunzi",
+        "english": "student"
+    },
+    {
+        "swahili": "mwanaume",
+        "english": "man"
+    },
+    {
+        "swahili": "mwanamke",
+        "english": "woman"
+    },
+    {
+        "swahili": "mwenyeji",
+        "english": "host"
+    },
+    {
+        "swahili": "mwezi",
+        "english": "moon"
+    },
+    {
+        "swahili": "mwezi",
+        "english": "month"
+    },
+    {
+        "swahili": "mwisho",
+        "english": "last"
+    },
+    {
+        "swahili": "mwitu",
+        "english": "forest"
+    },
+    {
+        "swahili": "mwitu",
+        "english": "woods"
+    },
+    {
+        "swahili": "mwamba",
+        "english": "cliff"
+    },
+    {
+        "swahili": "mwamba",
+        "english": "reef"
+    },
+    {
+        "swahili": "mwaka",
+        "english": "year"
+    },
+    {
+        "swahili": "mzuri",
+        "english": "fine"
+    },
+    {
+        "swahili": "mzuri",
+        "english": "good"
+    },
+    {
+        "swahili": "mzuri sana",
+        "english": "very well"
+    },
+    {
+        "swahili": "na dakika",
+        "english": "and minutes"
+    },
+    {
+        "swahili": "na wewe je",
+        "english": "and you"
+    },
+    {
+        "swahili": "nane",
+        "english": "eight"
+    },
+    {
+        "swahili": "nani",
+        "english": "who"
+    },
+    {
+        "swahili": "nanasi",
+        "english": "pineapple"
+    },
+    {
+        "swahili": "nchi kavu",
+        "english": "land"
+    },
+    {
+        "swahili": "ndefu",
+        "english": "long"
+    },
+    {
+        "swahili": "ndege",
+        "english": "airplane"
+    },
+    {
+        "swahili": "ndani",
+        "english": "inside"
+    },
+    {
+        "swahili": "ndizi",
+        "english": "banana"
+    },
+    {
+        "swahili": "ndogo",
+        "english": "small"
+    },
+    {
+        "swahili": "ndoto",
+        "english": "dream"
+    },
+    {
+        "swahili": "ndugu",
+        "english": "relative/brother"
+    },
+    {
+        "swahili": "ndugu",
+        "english": "sibling"
+    },
+    {
+        "swahili": "ndugu",
+        "english": "younger sibling"
+    },
+    {
+        "swahili": "ndiyo",
+        "english": "yes"
+    },
+    {
+        "swahili": "nene",
+        "english": "thick"
+    },
+    {
+        "swahili": "ngapi",
+        "english": "how many"
+    },
+    {
+        "swahili": "ng'ombe",
+        "english": "cow"
+    },
+    {
+        "swahili": "ngozi",
+        "english": "skin"
+    },
+    {
+        "swahili": "nguo",
+        "english": "clothes"
+    },
+    {
+        "swahili": "ngumu",
+        "english": "difficult/hard"
+    },
+    {
+        "swahili": "ngurumo",
+        "english": "thunder"
+    },
+    {
+        "swahili": "nguvu",
+        "english": "strength"
+    },
+    {
+        "swahili": "nimechoka",
+        "english": "I am tired"
+    },
+    {
+        "swahili": "nimefurahi kukutana",
+        "english": "pleased to meet you"
+    },
+    {
+        "swahili": "nimepotea",
+        "english": "I am lost"
+    },
+    {
+        "swahili": "nimeshiba",
+        "english": "I am satisfied"
+    },
+    {
+        "swahili": "ninafanya kazi kwa",
+        "english": "I am doing work for"
+    },
+    {
+        "swahili": "ninaitwa",
+        "english": "I call myself"
+    },
+    {
+        "swahili": "ninafuraha kukutana nawe",
+        "english": "nice to meet you"
+    },
+    {
+        "swahili": "ninasikia kiu",
+        "english": "I am thirsty"
+    },
+    {
+        "swahili": "ninasikia njaa",
+        "english": "I am hungry"
+    },
+    {
+        "swahili": "ninaomba",
+        "english": "I would like"
+    },
+    {
+        "swahili": "ninatoka nchi ya",
+        "english": "I am from"
+    },
+    {
+        "swahili": "nini",
+        "english": "what"
+    },
+    {
+        "swahili": "nisamehe",
+        "english": "excuse me"
+    },
+    {
+        "swahili": "nitakuja",
+        "english": "I will come"
+    },
+    {
+        "swahili": "njano",
+        "english": "yellow"
+    },
+    {
+        "swahili": "njia",
+        "english": "way/path"
+    },
+    {
+        "swahili": "nyama",
+        "english": "meat"
+    },
+    {
+        "swahili": "nyama choma",
+        "english": "grilled meat"
+    },
+    {
+        "swahili": "nyani",
+        "english": "monkey"
+    },
+    {
+        "swahili": "nyanya",
+        "english": "tomato"
+    },
+    {
+        "swahili": "nyeusi",
+        "english": "black"
+    },
+    {
+        "swahili": "nyeupe",
+        "english": "white"
+    },
+    {
+        "swahili": "nyekundu",
+        "english": "red"
+    },
+    {
+        "swahili": "nyepesi",
+        "english": "light"
+    },
+    {
+        "swahili": "nyika",
+        "english": "savanna"
+    },
+    {
+        "swahili": "nyinyi",
+        "english": "you (plural)"
+    },
+    {
+        "swahili": "nyoka",
+        "english": "snake"
+    },
+    {
+        "swahili": "nyota",
+        "english": "star"
+    },
+    {
+        "swahili": "nyumba",
+        "english": "house"
+    },
+    {
+        "swahili": "nywele",
+        "english": "hair"
+    },
+    {
+        "swahili": "nyembamba",
+        "english": "narrow"
+    },
+    {
+        "swahili": "nyati",
+        "english": "buffalo"
+    },
+    {
+        "swahili": "nyuma",
+        "english": "back"
+    },
+    {
+        "swahili": "nyuma",
+        "english": "behind"
+    },
+    {
+        "swahili": "nje",
+        "english": "outside"
+    },
+    {
+        "swahili": "nzito",
+        "english": "heavy"
+    },
+    {
+        "swahili": "nzuri",
+        "english": "beautiful"
+    },
+    {
+        "swahili": "nzuri",
+        "english": "good"
+    },
+    {
+        "swahili": "paka",
+        "english": "cat"
+    },
+    {
+        "swahili": "pamoja",
+        "english": "together"
+    },
+    {
+        "swahili": "pango",
+        "english": "cave"
+    },
+    {
+        "swahili": "parachichi",
+        "english": "avocado"
+    },
+    {
+        "swahili": "pembeni",
+        "english": "corner"
+    },
+    {
+        "swahili": "pesa",
+        "english": "money"
+    },
+    {
+        "swahili": "pesa ngapi",
+        "english": "how much money"
+    },
+    {
+        "swahili": "pikipiki",
+        "english": "motorcycle"
+    },
+    {
+        "swahili": "pilipili",
+        "english": "pepper"
+    },
+    {
+        "swahili": "pili",
+        "english": "second"
+    },
+    {
+        "swahili": "poa",
+        "english": "cool"
+    },
+    {
+        "swahili": "pole",
+        "english": "my sympathy"
+    },
+    {
+        "swahili": "pole pole",
+        "english": "slowly"
+    },
+    {
+        "swahili": "polisi",
+        "english": "police"
+    },
+    {
+        "swahili": "posta",
+        "english": "post office"
+    },
+    {
+        "swahili": "povu",
+        "english": "foam"
+    },
+    {
+        "swahili": "pua",
+        "english": "nose"
+    },
+    {
+        "swahili": "punda",
+        "english": "donkey"
+    },
+    {
+        "swahili": "punda milia",
+        "english": "zebra"
+    },
+    {
+        "swahili": "pwani",
+        "english": "beach"
+    },
+    {
+        "swahili": "pwani",
+        "english": "coast/beach"
+    },
+    {
+        "swahili": "pwani",
+        "english": "shore"
+    },
+    {
+        "swahili": "radi",
+        "english": "bolt of lightning"
+    },
+    {
+        "swahili": "rafiki",
+        "english": "friend"
+    },
+    {
+        "swahili": "rafiki",
+        "english": "friend/pal"
+    },
+    {
+        "swahili": "rahisi",
+        "english": "easy/cheap"
+    },
+    {
+        "swahili": "rahisi",
+        "english": "cheap"
+    },
+    {
+        "swahili": "rangi",
+        "english": "color/paint"
+    },
+    {
+        "swahili": "rasi",
+        "english": "cape"
+    },
+    {
+        "swahili": "redio",
+        "english": "radio"
+    },
+    {
+        "swahili": "rubani",
+        "english": "pilot"
+    },
+    {
+        "swahili": "rudia tena",
+        "english": "repeat again"
+    },
+    {
+        "swahili": "saa",
+        "english": "clock/hour"
+    },
+    {
+        "swahili": "saa",
+        "english": "watch/clock/hour"
+    },
+    {
+        "swahili": "saa kumi",
+        "english": "4 PM"
+    },
+    {
+        "swahili": "saa kumi na mbili",
+        "english": "6 PM"
+    },
+    {
+        "swahili": "saa mbili usiku",
+        "english": "8 PM"
+    },
+    {
+        "swahili": "saa moja",
+        "english": "7 AM"
+    },
+    {
+        "swahili": "saa ngapi",
+        "english": "what time is it"
+    },
+    {
+        "swahili": "saa sita",
+        "english": "12 PM (noon)"
+    },
+    {
+        "swahili": "saa tano",
+        "english": "11 AM"
+    },
+    {
+        "swahili": "saba",
+        "english": "seven"
+    },
+    {
+        "swahili": "sabini",
+        "english": "seventy"
+    },
+    {
+        "swahili": "safari",
+        "english": "journey"
+    },
+    {
+        "swahili": "safari",
+        "english": "trip"
+    },
+    {
+        "swahili": "safi",
+        "english": "clean"
+    },
+    {
+        "swahili": "sahihi",
+        "english": "correct"
+    },
+    {
+        "swahili": "sakafu",
+        "english": "floor"
+    },
+    {
+        "swahili": "salama",
+        "english": "peaceful"
+    },
+    {
+        "swahili": "samaki",
+        "english": "fish"
+    },
+    {
+        "swahili": "samahani",
+        "english": "excuse me"
+    },
+    {
+        "swahili": "samahani",
+        "english": "sorry"
+    },
+    {
+        "swahili": "sasa",
+        "english": "now"
+    },
+    {
+        "swahili": "sauti",
+        "english": "voice"
+    },
+    {
+        "swahili": "savana",
+        "english": "savanna"
+    },
+    {
+        "swahili": "sawa",
+        "english": "okay"
+    },
+    {
+        "swahili": "sekunde",
+        "english": "second"
+    },
+    {
+        "swahili": "sema tena pole pole",
+        "english": "repeat that slowly"
+    },
+    {
+        "swahili": "sema tena tafadhali",
+        "english": "can you repeat that please"
+    },
+    {
+        "swahili": "shida",
+        "english": "problem"
+    },
+    {
+        "swahili": "shida kidogo",
+        "english": "small problem"
+    },
+    {
+        "swahili": "shule",
+        "english": "school"
+    },
+    {
+        "swahili": "shwari",
+        "english": "calm"
+    },
+    {
+        "swahili": "sifahamu",
+        "english": "I don't understand"
+    },
+    {
+        "swahili": "sijui",
+        "english": "I don't know"
+    },
+    {
+        "swahili": "sikio",
+        "english": "ear"
+    },
+    {
+        "swahili": "siku njema",
+        "english": "have a good day"
+    },
+    {
+        "swahili": "simba",
+        "english": "lion"
+    },
+    {
+        "swahili": "simu",
+        "english": "phone"
+    },
+    {
+        "swahili": "siongei Kiswahili",
+        "english": "I don't speak Swahili"
+    },
+    {
+        "swahili": "sisi",
+        "english": "us"
+    },
+    {
+        "swahili": "sisi",
+        "english": "we"
+    },
+    {
+        "swahili": "sita",
+        "english": "six"
+    },
+    {
+        "swahili": "sitini",
+        "english": "sixty"
+    },
+    {
+        "swahili": "soko",
+        "english": "market"
+    },
+    {
+        "swahili": "stesheni",
+        "english": "station"
+    },
+    {
+        "swahili": "sufuri",
+        "english": "zero"
+    },
+    {
+        "swahili": "sukari",
+        "english": "sugar"
+    },
+    {
+        "swahili": "swala",
+        "english": "gazelle"
+    },
+    {
+        "swahili": "swali",
+        "english": "question"
+    },
+    {
+        "swahili": "taa",
+        "english": "light/lamp"
+    },
+    {
+        "swahili": "tafadhali",
+        "english": "please"
+    },
+    {
+        "swahili": "tamu",
+        "english": "sweet"
+    },
+    {
+        "swahili": "tambarare",
+        "english": "plain"
+    },
+    {
+        "swahili": "tango",
+        "english": "cucumber"
+    },
+    {
+        "swahili": "tano",
+        "english": "five"
+    },
+    {
+        "swahili": "tatu",
+        "english": "three"
+    },
+    {
+        "swahili": "tatu",
+        "english": "third"
+    },
+    {
+        "swahili": "taulo",
+        "english": "towel"
+    },
+    {
+        "swahili": "teksi",
+        "english": "taxi"
+    },
+    {
+        "swahili": "televisheni",
+        "english": "television"
+    },
+    {
+        "swahili": "tembo",
+        "english": "elephant"
+    },
+    {
+        "swahili": "tetemeko",
+        "english": "earthquake"
+    },
+    {
+        "swahili": "thelathini",
+        "english": "thirty"
+    },
+    {
+        "swahili": "themanini",
+        "english": "eighty"
+    },
+    {
+        "swahili": "tikiti maji",
+        "english": "watermelon"
+    },
+    {
+        "swahili": "tisa",
+        "english": "nine"
+    },
+    {
+        "swahili": "tisini",
+        "english": "ninety"
+    },
+    {
+        "swahili": "treni",
+        "english": "train"
+    },
+    {
+        "swahili": "tufani",
+        "english": "storm"
+    },
+    {
+        "swahili": "twiga",
+        "english": "giraffe"
+    },
+    {
+        "swahili": "udongo",
+        "english": "soil"
+    },
+    {
+        "swahili": "ufuko",
+        "english": "shore"
+    },
+    {
+        "swahili": "ugali",
+        "english": "cornmeal porridge"
+    },
+    {
+        "swahili": "ugonjwa",
+        "english": "illness"
+    },
+    {
+        "swahili": "ukuta",
+        "english": "wall"
+    },
+    {
+        "swahili": "ukweli",
+        "english": "truth"
+    },
+    {
+        "swahili": "ulimwengu",
+        "english": "world"
+    },
+    {
+        "swahili": "ulimi",
+        "english": "tongue"
+    },
+    {
+        "swahili": "umeme",
+        "english": "lightning"
+    },
+    {
+        "swahili": "unaweza kunisaidia",
+        "english": "can you help me"
+    },
+    {
+        "swahili": "unaitwa nani",
+        "english": "what do you call yourself"
+    },
+    {
+        "swahili": "uongo",
+        "english": "lie"
+    },
+    {
+        "swahili": "upande",
+        "english": "side"
+    },
+    {
+        "swahili": "upendo",
+        "english": "love"
+    },
+    {
+        "swahili": "upinde",
+        "english": "rainbow"
+    },
+    {
+        "swahili": "usiku",
+        "english": "night"
+    },
+    {
+        "swahili": "usingizi",
+        "english": "sleep"
+    },
+    {
+        "swahili": "usingizi",
+        "english": "sleepiness"
+    },
+    {
+        "swahili": "uwanja wa ndege",
+        "english": "airport"
+    },
+    {
+        "swahili": "upepo",
+        "english": "wind"
+    },
+    {
+        "swahili": "vipi",
+        "english": "how"
+    },
+    {
+        "swahili": "vipi",
+        "english": "what's up with you"
+    },
+    {
+        "swahili": "viatu",
+        "english": "shoes"
+    },
+    {
+        "swahili": "vita",
+        "english": "war"
+    },
+    {
+        "swahili": "vumbi",
+        "english": "dust"
+    },
+    {
+        "swahili": "wali",
+        "english": "rice"
+    },
+    {
+        "swahili": "wanaume",
+        "english": "men"
+    },
+    {
+        "swahili": "wanawake",
+        "english": "women"
+    },
+    {
+        "swahili": "wangwa",
+        "english": "lagoon"
+    },
+    {
+        "swahili": "wapi",
+        "english": "where"
+    },
+    {
+        "swahili": "wazo",
+        "english": "idea"
+    },
+    {
+        "swahili": "wao",
+        "english": "they"
+    },
+    {
+        "swahili": "wao",
+        "english": "them"
+    },
+    {
+        "swahili": "wakati",
+        "english": "time"
+    },
+    {
+        "swahili": "wakati",
+        "english": "time/moment"
+    },
+    {
+        "swahili": "wewe",
+        "english": "you"
+    },
+    {
+        "swahili": "wiki",
+        "english": "week"
+    },
+    {
+        "swahili": "wimbi",
+        "english": "wave"
+    },
+    {
+        "swahili": "yeye",
+        "english": "he/she"
+    },
+    {
+        "swahili": "yeye",
+        "english": "him/her"
+    },
+    {
+        "swahili": "zamani",
+        "english": "old"
+    },
+    {
+        "swahili": "zambarau",
+        "english": "purple"
+    },
+    {
+        "swahili": "ziwa",
+        "english": "lake"
+    }
+]
