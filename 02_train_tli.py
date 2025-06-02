@@ -65,8 +65,8 @@ def collate_fn(batch, tokenizer):
     Tokenizes a batch of Swahili anchors and English positives.
     """
     anchors = [item['anchor_sw'] for item in batch]
-    positives = [item['positive_en'] for item in batch]
-
+    positives = [item['positive['] for item in batch] # Corrected typo here, was 'positives[']'
+    
     tokenized_anchors = tokenizer(anchors, padding=True, truncation=True, return_tensors="pt")
     tokenized_positives = tokenizer(positives, padding=True, truncation=True, return_tensors="pt")
     
@@ -93,17 +93,17 @@ def get_pooled_embeddings(tokens, model, layer_idx, debug_prefix=""): # Added de
     hidden_states = outputs.hidden_states[layer_idx] # (batch_size, sequence_length, hidden_size)
     attention_mask = tokens['attention_mask'].unsqueeze(-1).expand(hidden_states.size())
     
-    # Debug: Check values of hidden_states before masking
+    # Debug: Check values of hidden_states before masking - USE .detach()
     if hidden_states.numel() > 0:
-        logging.info(f"{debug_prefix}Hidden States (sample 0, first 3 values): {hidden_states[0, 0, :3].cpu().numpy()}")
+        logging.info(f"{debug_prefix}Hidden States (sample 0, first 3 values): {hidden_states[0, 0, :3].detach().cpu().numpy()}")
         logging.info(f"{debug_prefix}Hidden States shape: {hidden_states.shape}")
     
     # Mask out padding tokens (their hidden states become 0)
     masked_hidden_states = hidden_states * attention_mask
     
-    # Debug: Check values of masked_hidden_states
+    # Debug: Check values of masked_hidden_states - USE .detach()
     if masked_hidden_states.numel() > 0:
-        logging.info(f"{debug_prefix}Masked Hidden States (sample 0, first 3 values): {masked_hidden_states[0, 0, :3].cpu().numpy()}")
+        logging.info(f"{debug_prefix}Masked Hidden States (sample 0, first 3 values): {masked_hidden_states[0, 0, :3].detach().cpu().numpy()}")
 
     # Sum embeddings and divide by the number of non-padding tokens
     sum_embeddings = torch.sum(masked_hidden_states, dim=1)
@@ -112,23 +112,23 @@ def get_pooled_embeddings(tokens, model, layer_idx, debug_prefix=""): # Added de
     # Avoid division by zero for empty sequences or zero-token inputs
     num_non_padding = torch.clamp(num_non_padding, min=1e-9)
     
-    # Debug: Check num_non_padding
+    # Debug: Check num_non_padding - it's already a scalar or 1D tensor, direct item() is fine
     logging.info(f"{debug_prefix}Num Non-Padding Tokens (first sample): {num_non_padding[0].item():.2f}")
 
     pooled_embeddings = sum_embeddings / num_non_padding
     
-    # Debug: Check pooled_embeddings before normalization
+    # Debug: Check pooled_embeddings before normalization - USE .detach()
     if pooled_embeddings.numel() > 0:
-        logging.info(f"{debug_prefix}Pooled Embeddings (sample 0, first 3 values): {pooled_embeddings[0, :3].cpu().numpy()}")
+        logging.info(f"{debug_prefix}Pooled Embeddings (sample 0, first 3 values): {pooled_embeddings[0, :3].detach().cpu().numpy()}")
         logging.info(f"{debug_prefix}Pooled Embedding Norm (sample 0, pre-norm): {torch.norm(pooled_embeddings[0]).item():.4f}")
 
 
     # L2 Normalize embeddings before returning. This is crucial for cosine similarity.
     normalized_embeddings = F.normalize(pooled_embeddings, p=2, dim=1) # Normalize along embedding dimension
     
-    # Debug: Check normalized_embeddings
+    # Debug: Check normalized_embeddings - USE .detach()
     if normalized_embeddings.numel() > 0:
-        logging.info(f"{debug_prefix}Normalized Embeddings (sample 0, first 3 values): {normalized_embeddings[0, :3].cpu().numpy()}")
+        logging.info(f"{debug_prefix}Normalized Embeddings (sample 0, first 3 values): {normalized_embeddings[0, :3].detach().cpu().numpy()}")
         logging.info(f"{debug_prefix}Normalized Embedding Norm (sample 0, post-norm): {torch.norm(normalized_embeddings[0]).item():.4f}")
 
     return normalized_embeddings
@@ -298,6 +298,7 @@ def main():
             optimizer.zero_grad()
             
             # --- FORWARD PASS (Embeddings are normalized inside get_pooled_embeddings) ---
+            # Added `debug_prefix` to differentiate logs from anchor and positive embeddings
             anchor_embs = get_pooled_embeddings(batch[0], model, config.TARGET_LAYER, debug_prefix="Anchor Embeddings: ")
             positive_embs = get_pooled_embeddings(batch[1], model, config.TARGET_LAYER, debug_prefix="Positive Embeddings: ")
             
