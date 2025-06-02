@@ -1,6 +1,6 @@
 # 05_qualitative_probing.py
 import torch
-import torch.nn.functional as F # Not strictly used here, but good practice to keep with model-related imports
+import torch.nn.functional as F
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, AutoConfig
 from peft import PeftModel
 import json
@@ -40,57 +40,48 @@ def load_model(model_id, quantization_config, adapter_path=None):
     """
     logging.info(f"Loading model: {model_id} (Adapters: {adapter_path if adapter_path else 'None'})")
 
-    # Load the configuration first
     model_config = AutoConfig.from_pretrained(model_id)
 
-    # Apply the rope_scaling patch if necessary
     if hasattr(model_config, "rope_scaling") and isinstance(model_config.rope_scaling, dict):
         if "type" not in model_config.rope_scaling:
             logging.warning("`rope_scaling` in model config is missing 'type' key. Patching to 'linear' as a workaround.")
-            model_config.rope_scaling["type"] = "linear" # Default to 'linear' if 'type' is missing
-        
-        # Ensure 'factor' is also present, as it's typically required with 'type'
+            model_config.rope_scaling["type"] = "linear"
         if "factor" not in model_config.rope_scaling:
             logging.warning("`rope_scaling` in model config is missing 'factor' key. Patching to 1.0 as a workaround.")
-            model_config.rope_scaling["factor"] = 1.0 # Default factor if missing
-
+            model_config.rope_scaling["factor"] = 1.0
         logging.info(f"Final `rope_scaling` config after potential patch: {model_config.rope_scaling}")
     else:
         logging.info("`rope_scaling` attribute not found or not a dictionary in model config. No patch applied.")
 
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
-        config=model_config, # Pass the potentially modified config
+        config=model_config,
         quantization_config=quantization_config,
         device_map="auto"
     )
 
     if adapter_path:
         logging.info(f"Loading and merging LoRA adapters from {adapter_path}...")
-        # Check if adapter_path actually exists
         if not os.path.exists(adapter_path):
             logging.error(f"Error: LoRA adapter path '{adapter_path}' does not exist.")
-            # Fallback to base model if adapters not found to avoid crashing, but warn user
             logging.warning("Proceeding with base model as adapters could not be loaded/merged.")
-            # Set adapter_path to None so we don't try to load it again
             adapter_path = None
         else:
             try:
                 model = PeftModel.from_pretrained(model, adapter_path)
-                model = model.merge_and_unload() # Merge LoRA weights into the base model
+                model = model.merge_and_unload()
                 logging.info("LoRA adapters merged successfully.")
             except Exception as e:
                 logging.error(f"Error merging LoRA adapters from '{adapter_path}': {e}")
                 logging.warning("Proceeding with base model as adapters could not be loaded/merged.")
                 adapter_path = None
 
-    # Tokenizer must be loaded separately as it's not part of model.from_pretrained's output
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
-        model.config.pad_token_id = tokenizer.eos_token_id # Ensure model config also reflects this
+        model.config.pad_token_id = tokenizer.eos_token_id
 
-    model.eval() # Set model to evaluation mode
+    model.eval()
     return model, tokenizer
 
 # --- Main Script ---
@@ -101,23 +92,22 @@ def generate_response(prompt, model, tokenizer, config):
     
     with torch.no_grad():
         outputs = model.generate(
-            **inputs,
+            **inputs, # This correctly unpacks 'input_ids' and 'attention_mask'
             max_new_tokens=config.MAX_NEW_TOKENS,
             temperature=config.TEMPERATURE,
             top_p=config.TOP_P,
             do_sample=config.DO_SAMPLE,
             pad_token_id=tokenizer.eos_token_id, # Essential for Llama
-            attention_mask=inputs.attention_mask # Pass attention mask
+            # Removed redundant 'attention_mask=inputs.attention_mask'
         )
     
-    # Decode the generated tokens, skipping the prompt tokens
     response = tokenizer.decode(outputs[0][inputs.input_ids.shape[1]:], skip_special_tokens=True).strip()
     return response
 
 def main():
     config = ProbeConfig()
     os.makedirs(config.OUTPUT_DIR, exist_ok=True)
-    random.seed(config.RANDOM_STATE) # Set seed for random sample selection
+    random.seed(config.RANDOM_STATE)
 
     logging.info("--- Phase 5: Qualitative Probing ---")
 
@@ -125,11 +115,9 @@ def main():
     quant_config = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_compute_dtype=torch.bfloat16)
     
     logging.info("Loading base model for probing...")
-    # Load base model and its tokenizer (will be used for both models to ensure consistency)
     base_model, tokenizer = load_model(config.MODEL_ID, quant_config) 
     
     logging.info("Loading TLI-tuned model for probing...")
-    # Load TLI-tuned model (which merges adapters) - no need for a new tokenizer here
     tli_model, _ = load_model(config.MODEL_ID, quant_config, adapter_path=config.ADAPTER_PATH)
 
     # 2. Select words and define prompt templates
@@ -176,17 +164,12 @@ def main():
             for p_template in prompt_templates:
                 prompt_text = p_template["template"].format(swahili=sw_word, english=en_word)
                 
-                # Generate from base model
                 base_response = generate_response(prompt_text, base_model, tokenizer, config)
-                
-                # Generate from TLI model
                 tli_response = generate_response(prompt_text, tli_model, tokenizer, config)
 
-                # Format outputs for Markdown table
-                # Replace newlines with <br> for single line in table, escape pipe characters
                 formatted_base_response = base_response.replace('\n', '<br>').replace('|', '\\|')
                 formatted_tli_response = tli_response.replace('\n', '<br>').replace('|', '\\|')
-                formatted_prompt_text = prompt_text.replace('|', '\\|') # Escape pipes in prompt too
+                formatted_prompt_text = prompt_text.replace('|', '\\|')
 
                 f.write(f"| {p_template['name']} | `{formatted_prompt_text}` | `{formatted_base_response}` | `{formatted_tli_response}` |\n")
             
