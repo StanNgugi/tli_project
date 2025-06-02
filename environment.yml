@@ -27,6 +27,7 @@ dependencies:
   # Common Data Science / LLM Utility Libraries (Conda-first where available)
   - scikit-learn
   - pandas
+  - seaborn 
   - tqdm
   - einops
   - matplotlib
