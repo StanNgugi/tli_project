@@ -19,7 +19,7 @@ class TrainingConfig:
     WORD_PAIRS_PATH = "./data/word_pairs.json"
     
     # Determined from 01_pilot_layer_selection.py
-    TARGET_LAYER = 18  # 🎯 IMPORTANT: UPDATE THIS with the output from the pilot script (e.g., 18 or 20)
+    TARGET_LAYER = 2  # 🎯 IMPORTANT: UPDATE THIS with the output from the pilot script (e.g., 18 or 20)
     
     # LoRA Parameters
     LORA_R = 16

@@ -23,7 +23,7 @@ class EvalConfig:
     CONTROL_PAIRS_PATH = "./data/control_word_pairs.json" # Unseen pairs, ~50-100 pairs
     
     # From Phase 2 training
-    TARGET_LAYER = 18 # 🎯 IMPORTANT: Use the same layer index as determined in 01_pilot_layer_selection.py
+    TARGET_LAYER = 2 # 🎯 IMPORTANT: Use the same layer index as determined in 01_pilot_layer_selection.py
     
     # Output
     OUTPUT_DIR = "./results/evaluation"

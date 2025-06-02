@@ -20,7 +20,7 @@ class VisConfig:
     MODEL_ID = "Lugha-Llama/Lugha-Llama-8B-wura"
     ADAPTER_PATH = "./results/tli_lora_adapters/final/" # Ensure this path is correct
     WORD_PAIRS_PATH = "./data/word_pairs.json"
-    TARGET_LAYER = 18 # 🎯 Use the same layer index as in training
+    TARGET_LAYER = 2 # 🎯 Use the same layer index as in training
     
     # Visualization Parameters
     NUM_PAIRS_TO_VISUALIZE = 25 # Keep this number manageable for a clear plot
