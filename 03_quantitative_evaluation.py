@@ -66,9 +66,23 @@ def load_model(model_id, quantization_config, adapter_path=None):
 
     if adapter_path:
         logging.info(f"Loading and merging LoRA adapters from {adapter_path}...")
-        model = PeftModel.from_pretrained(model, adapter_path)
-        model = model.merge_and_unload() # Merge LoRA weights into the base model
-        logging.info("LoRA adapters merged successfully.")
+        # Check if adapter_path actually exists
+        if not os.path.exists(adapter_path):
+            logging.error(f"Error: LoRA adapter path '{adapter_path}' does not exist.")
+            # Fallback to base model if adapters not found to avoid crashing, but warn user
+            logging.warning("Proceeding with base model as adapters could not be loaded/merged.")
+            # Set adapter_path to None so we don't try to load it again
+            adapter_path = None
+        else:
+            try:
+                model = PeftModel.from_pretrained(model, adapter_path)
+                model = model.merge_and_unload() # Merge LoRA weights into the base model
+                logging.info("LoRA adapters merged successfully.")
+            except Exception as e:
+                logging.error(f"Error merging LoRA adapters from '{adapter_path}': {e}")
+                logging.warning("Proceeding with base model as adapters could not be loaded/merged.")
+                adapter_path = None
+
 
     # Tokenizer must be loaded separately as it's not part of model.from_pretrained's output
     tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -82,17 +96,30 @@ def load_model(model_id, quantization_config, adapter_path=None):
 def get_word_embedding(word, model, tokenizer, layer_idx):
     """
     Pass a single word through the model and get its mean-pooled embedding from the target layer.
+    This version tries to exclude special tokens from pooling if possible.
     Embeddings are L2 normalized before returning.
     """
-    # Tokenize the single word, adding special tokens if needed (e.g., bos_token, eos_token)
-    # The training process implicitly used these by padding=True
-    # For a single word, it's often good to explicitly add special tokens if it's how they were trained.
-    # However, for getting word embeddings, we usually want the representation of just the word.
-    # Let's try without special tokens first, or with just `add_special_tokens=False` if we want raw word embeddings.
-    # For now, stick to the training tokenization style, which included default special tokens.
+    # Tokenize the word. Do NOT add special tokens by default for single words, 
+    # unless you explicitly want to include them in the pooling.
+    # Set add_special_tokens=False to get just the word's tokens.
+    # However, for consistency with Llama models (which are often trained with BOS/EOS),
+    # we'll keep add_special_tokens=True for now, but ensure we only pool the actual word tokens.
     
+    # Let's tokenize without special tokens first, then add if needed for context.
+    # For a *single word* embedding, typically you want the embedding of just the word token(s).
+    # Llama models often treat BOS/EOS as contextual. If "word" is tokenized as [BOS, word_id, EOS],
+    # pooling only the 'word_id' embedding is often more desirable for word-level similarity.
+    
+    # We will pass the full sequence as tokenized by the training collate_fn, then ensure we pool correctly.
+    # The collate_fn uses padding=True, truncation=True, return_tensors="pt".
+    # For a single word, this usually means: [BOS_ID, WORD_ID, EOS_ID] or [BOS_ID, WORD_ID, PAD_ID, PAD_ID, ..., EOS_ID]
+    # For simplicity, let's keep it consistent with how training batch was tokenized:
     tokens = tokenizer(word, return_tensors="pt", padding=True, truncation=True, max_length=model.config.max_position_embeddings)
     
+    # Debug info for token IDs and attention mask
+    # logging.debug(f"Word: '{word}' -> Tokens: {tokens['input_ids'].tolist()}")
+    # logging.debug(f"Attention Mask: {tokens['attention_mask'].tolist()}")
+
     # Ensure tokens are on the correct device
     tokens = {k: v.to(model.device) for k, v in tokens.items()}
     
@@ -101,25 +128,49 @@ def get_word_embedding(word, model, tokenizer, layer_idx):
     
     hidden_states = outputs.hidden_states[layer_idx] # (batch_size=1, sequence_length, hidden_size)
     
-    # Calculate the number of non-padding tokens. This is crucial for mean pooling.
-    # num_actual_tokens_per_sequence will be (batch_size=1, 1)
-    num_actual_tokens_per_sequence = tokens['attention_mask'].sum(dim=1, keepdim=True) 
-    num_actual_tokens_per_sequence = torch.clamp(num_actual_tokens_per_sequence, min=1e-9) # Avoid division by zero
+    # Identify and exclude special tokens from pooling for a more accurate word embedding
+    # Get indices of tokens that are NOT special tokens and are NOT padding tokens
+    # This requires checking against specific special token IDs
     
-    # Expand attention mask to match hidden_states dimensions for element-wise masking
-    attention_mask_expanded = tokens['attention_mask'].unsqueeze(-1).expand(hidden_states.size())
-    masked_hidden_states = hidden_states * attention_mask_expanded
+    # If the tokenizer handles special tokens by default, they'll be part of input_ids.
+    # We want to pool only the actual content tokens.
+    # Let's refine the pooling mask:
     
-    # Sum along the sequence dimension (dim=1)
-    sum_embeddings = torch.sum(masked_hidden_states, dim=1) # Shape: (batch_size, hidden_size)
+    # Start with the attention mask, which correctly excludes padding tokens
+    pooling_mask = tokens['attention_mask'].clone().float() # (1, sequence_length)
     
-    # Mean pool by dividing sum by number of tokens
-    pooled_embedding = sum_embeddings / num_actual_tokens_per_sequence
+    # Zero out special tokens in the pooling_mask if they exist
+    # This is a common approach for sentence embeddings from LLMs.
+    # E.g., if BOS token is at index 0 and EOS token is at end (before padding)
+    # Llama's default BOS is 1, EOS is 2 (for Llama 2) or 128000/128001 (for Llama 3)
+    # Check your tokenizer.bos_token_id and tokenizer.eos_token_id
+    
+    # Iterate through each token in the sequence
+    for i, token_id in enumerate(tokens['input_ids'][0]): # Assumes batch size is 1
+        if token_id == tokenizer.bos_token_id or token_id == tokenizer.eos_token_id or token_id == tokenizer.pad_token_id:
+            pooling_mask[0, i] = 0.0 # Exclude special tokens from pooling
+    
+    # Now expand this refined pooling_mask to match hidden_states
+    pooling_mask_expanded = pooling_mask.unsqueeze(-1).expand(hidden_states.size()) # (1, sequence_length, hidden_size)
+    
+    # Apply the refined mask to hidden states
+    masked_hidden_states = hidden_states * pooling_mask_expanded
+    
+    # Calculate the sum of masked hidden states along the sequence dimension
+    sum_embeddings = torch.sum(masked_hidden_states, dim=1) # Shape: (batch_size=1, hidden_size)
+    
+    # Calculate the number of tokens that actually contribute to the sum (non-special, non-padding)
+    num_contributing_tokens = pooling_mask.sum(dim=1, keepdim=True) # Shape: (batch_size=1, 1)
+    num_contributing_tokens = torch.clamp(num_contributing_tokens, min=1e-9) # Avoid division by zero
+    
+    # Mean pool by dividing sum by number of contributing tokens
+    pooled_embedding = sum_embeddings / num_contributing_tokens
     
     # L2 Normalize embeddings before returning
     normalized_embedding = F.normalize(pooled_embedding, p=2, dim=1)
     
     return normalized_embedding.squeeze(0) # Remove batch dimension for a single embedding (D,)
+
 
 # --- Evaluation Logic ---
 
@@ -147,8 +198,14 @@ def evaluate_pairs(word_pairs, base_model, tli_model, tokenizer, config):
         if sw_emb_base is None or en_emb_base is None or sw_emb_tli is None or en_emb_tli is None:
             logging.warning(f"Skipping pair ({sw_word}, {en_word}) due to failed embedding extraction.")
             continue
+        
+        # Check for zero-norm embeddings (can happen if pooling results in all zeros)
+        if torch.norm(sw_emb_base).item() < 1e-6 or torch.norm(en_emb_base).item() < 1e-6 or \
+           torch.norm(sw_emb_tli).item() < 1e-6 or torch.norm(en_emb_tli).item() < 1e-6:
+            logging.warning(f"Skipping pair ({sw_word}, {en_word}) due to zero-norm embedding(s).")
+            continue
 
-        # Calculate cosine similarities (embeddings are already normalized, so matmul is efficient)
+        # Calculate cosine similarities using dot product (embeddings are already L2-normalized)
         sim_pre_tli = torch.dot(sw_emb_base, en_emb_base).item()
         sim_post_tli = torch.dot(sw_emb_tli, en_emb_tli).item()
         
@@ -219,15 +276,10 @@ def main():
     quant_config = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_compute_dtype=torch.bfloat16)
     
     # Load base model and its tokenizer
-    base_model, tokenizer_base = load_model(config.MODEL_ID, quant_config)
-    # Load TLI-tuned model (which merges adapters) and its tokenizer
-    tli_model, tokenizer_tli = load_model(config.MODEL_ID, quant_config, adapter_path=config.ADAPTER_PATH)
-
-    # IMPORTANT: Ensure both models use the same tokenizer instance for consistency in tokenization
-    # Since load_model returns a tokenizer, we'll ensure they are identical for evaluation.
-    # In this case, `load_model` always re-initializes, so `tokenizer_base` and `tokenizer_tli` will be identical.
-    # We'll just use `tokenizer_tli` for all calls to avoid confusion.
-    tokenizer = tokenizer_tli # Use the tokenizer loaded with the TLI model (they should be identical)
+    # The tokenizer returned by load_model is consistent, so we'll use `tokenizer` for all calls
+    base_model, tokenizer = load_model(config.MODEL_ID, quant_config)
+    # Load TLI-tuned model (which merges adapters)
+    tli_model, _ = load_model(config.MODEL_ID, quant_config, adapter_path=config.ADAPTER_PATH)
 
     # 2. Load Datasets
     try:
