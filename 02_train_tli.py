@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
+# ADDED AutoConfig here
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, get_linear_schedule_with_warmup, AutoConfig 
 from peft import get_peft_model, LoraConfig, TaskType
 import json
@@ -272,8 +273,22 @@ def main():
             anchor_embs = get_pooled_embeddings(batch[0], model, config.TARGET_LAYER)
             positive_embs = get_pooled_embeddings(batch[1], model, config.TARGET_LAYER)
             
+            # --- DEBUGGING: Print similarities for first few batches ---
+            if epoch == 0 and batch_idx < 5: # Only for first 5 batches of first epoch
+                # Calculate the similarities within this debug block
+                sim_matrix_debug = F.cosine_similarity(anchor_embs.unsqueeze(1), positive_embs.unsqueeze(0), dim=2)
+                pos_sim_debug = torch.diag(sim_matrix_debug)
+                neg_sim_matrix_debug = sim_matrix_debug.clone()
+                neg_sim_matrix_debug.fill_diagonal_(-float('inf'))
+                hardest_neg_sim_debug = torch.max(neg_sim_matrix_debug, dim=1).values
+                
+                logging.info(f"DEBUG Batch {batch_idx}:")
+                logging.info(f"  Avg Pos Sim: {pos_sim_debug.mean().item():.4f}, Min Pos Sim: {pos_sim_debug.min().item():.4f}")
+                logging.info(f"  Avg Hardest Neg Sim: {hardest_neg_sim_debug.mean().item():.4f}, Max Hardest Neg Sim: {hardest_neg_sim_debug.max().item():.4f}")
+                logging.info(f"  Margin + HNS - PS (pre-relu): {(config.MARGIN + hardest_neg_sim_debug - pos_sim_debug).mean().item():.4f}")
+            # --- END DEBUGGING ---
+
             # --- LOSS CALCULATION (using vectorized in-batch negatives) ---
-            # Using the new vectorized loss function
             loss = contrastive_loss_in_batch_negatives_vectorized(anchor_embs, positive_embs, config.MARGIN)
             
             # Check for NaN loss (can happen if embeddings become ill-conditioned or due to floating point issues)
