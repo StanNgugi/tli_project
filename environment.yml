@@ -20,12 +20,6 @@ dependencies:
   - pytorch-cuda=12.1     # **CRUCIAL**: Specifies the CUDA toolkit version PyTorch was built against.
                           # Ensure this matches your NVIDIA GPU driver capabilities.
                           # Common options include 11.8, 12.1, 12.2.
-  - transformers=4.43.0   # Hugging Face Transformers. Version 4.40.0+ is required for Llama 3's
-                          # `rope_scaling` and other newer model architectures.
-  - accelerate=0.30.1     # Hugging Face Accelerate for distributed training.
-                          # Keep compatible with your `transformers` version.
-  - peft=0.11.1           # Parameter-Efficient Fine-Tuning (PEFT) library.
-                          # Keep compatible with your `transformers` version.
   - bitsandbytes=0.43.1   # 8-bit optimization for LLMs. This version is generally
                           # compatible with PyTorch 2.x and CUDA 12.x.
                           # Ensure your GPU (NVIDIA A40 has CC 8.6) meets minimum compute capability.
@@ -49,8 +43,9 @@ dependencies:
   # These are packages that are typically not available via Conda channels,
   # or are often preferred to be installed via Pip due to faster updates or specific builds.
   - pip:
-    - sentence-transformers # Often easier to install directly via pip
-    - datasets              # Hugging Face Datasets library
+    - transformers==4.43.0   # Moved to pip. Specify exact version.
+    - accelerate==0.30.1     # Moved to pip. Keep compatible with transformers.
+    - peft==0.11.1           # Moved to pip. Keep compatible with transformers.
+    - sentence-transformers  # Often easier to install directly via pip
+    - datasets               # Hugging Face Datasets library
     # Add any other project-specific pip dependencies here
-    # Example: If you need a specific version of a package that's only on PyPI:
-    # - some-other-pip-package==1.2.3
