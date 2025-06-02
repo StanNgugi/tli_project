@@ -1,0 +1,25 @@
+# environment.yml
+name: tli_env
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.9
+  - pip
+  - numpy
+  - pandas
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - pytorch=2.1.0
+  - torchvision=0.16.0
+  - torchaudio=2.1.0
+  - pytorch-cuda=11.8 # Or match your CUDA version, e.g., 12.1. Crucial for bitsandbytes!
+  - pip:
+    - transformers==4.38.2
+    - peft==0.9.0
+    - accelerate==0.27.2
+    - bitsandbytes==0.42.0
+    - sentencepiece
+    - wandb # Optional: for logging, can be commented out
