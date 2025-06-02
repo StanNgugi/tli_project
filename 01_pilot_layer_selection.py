@@ -1,7 +1,7 @@
 # 01_pilot_layer_selection.py
 import torch
 import torch.nn.functional as F
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, AutoConfig # Import AutoConfig
 import json
 import pandas as pd
 import seaborn as sns
@@ -69,6 +69,29 @@ def main():
 
     # 1. Load Model and Tokenizer (Quantized)
     logging.info(f"Loading base model: {MODEL_ID}...")
+    
+    # --- START ROBUST CONFIG LOADING & PATCHING ---
+    # Load the configuration first
+    config = AutoConfig.from_pretrained(MODEL_ID)
+
+    # Apply the rope_scaling patch if necessary
+    # This handles potential KeyError: 'type' if the model config is non-standard
+    if hasattr(config, "rope_scaling") and isinstance(config.rope_scaling, dict):
+        if "type" not in config.rope_scaling:
+            logging.warning("`rope_scaling` in model config is missing 'type' key. Patching to 'linear' as a workaround.")
+            config.rope_scaling["type"] = "linear" # Default to 'linear' if 'type' is missing
+        
+        # Ensure 'factor' is also present, as it's typically required with 'type'
+        if "factor" not in config.rope_scaling:
+            logging.warning("`rope_scaling` in model config is missing 'factor' key. Patching to 1.0 as a workaround.")
+            config.rope_scaling["factor"] = 1.0 # Default factor if missing
+
+        # Log the final rope_scaling configuration after patching
+        logging.info(f"Final `rope_scaling` config after potential patch: {config.rope_scaling}")
+    else:
+        logging.info("`rope_scaling` attribute not found or not a dictionary in model config. No patch applied.")
+    # --- END ROBUST CONFIG LOADING & PATCHING ---
+
     quantization_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
@@ -77,9 +100,11 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_ID,
+        config=config, # Pass the potentially modified config
         quantization_config=quantization_config,
         device_map="auto" # Automatically distributes across GPUs if available
     )
+    
     # Llama tokenizer does not have a default pad token, usually uses EOS
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
