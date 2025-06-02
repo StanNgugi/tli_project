@@ -3,7 +3,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
-# ADDED AutoConfig here
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, get_linear_schedule_with_warmup, AutoConfig 
 from peft import get_peft_model, LoraConfig, TaskType
 import json
@@ -83,8 +82,8 @@ def get_pooled_embeddings(tokens, model, layer_idx):
     Embeddings are L2 normalized *before* returning.
     """
     tokens = {k: v.to(model.device) for k, v in tokens.items()}
-    with torch.no_grad(): # Ensure no gradients are computed for the frozen base model
-        outputs = model(**tokens, output_hidden_states=True)
+    # REMOVED: with torch.no_grad():
+    outputs = model(**tokens, output_hidden_states=True)
     
     hidden_states = outputs.hidden_states[layer_idx] # (batch_size, sequence_length, hidden_size)
     attention_mask = tokens['attention_mask'].unsqueeze(-1).expand(hidden_states.size())
