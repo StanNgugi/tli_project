@@ -65,8 +65,7 @@ def collate_fn(batch, tokenizer):
     Tokenizes a batch of Swahili anchors and English positives.
     """
     anchors = [item['anchor_sw'] for item in batch]
-    # CORRECTED: Changed 'positive[' to 'positive_en'
-    positives = [item['positive_en'] for item in batch]
+    positives = [item['positive_en'] for item in batch] # Corrected typo here in previous iteration
     
     tokenized_anchors = tokenizer(anchors, padding=True, truncation=True, return_tensors="pt")
     tokenized_positives = tokenizer(positives, padding=True, truncation=True, return_tensors="pt")
@@ -74,7 +73,7 @@ def collate_fn(batch, tokenizer):
     return tokenized_anchors, tokenized_positives
 
 # --- Core Logic ---
-def get_pooled_embeddings(tokens, model, layer_idx, debug_prefix=""): # Added debug_prefix
+def get_pooled_embeddings(tokens, model, layer_idx, debug_prefix=""):
     """
     Pass tokens through model and get mean-pooled embeddings from target layer.
     Embeddings are L2 normalized *before* returning.
@@ -92,31 +91,43 @@ def get_pooled_embeddings(tokens, model, layer_idx, debug_prefix=""): # Added de
     outputs = model(**tokens, output_hidden_states=True)
     
     hidden_states = outputs.hidden_states[layer_idx] # (batch_size, sequence_length, hidden_size)
-    attention_mask = tokens['attention_mask'].unsqueeze(-1).expand(hidden_states.size())
+    
+    # 1. Mask out padding tokens (their hidden states become 0)
+    # Expand the original attention mask to match the hidden states' dimensions for element-wise multiplication
+    attention_mask_expanded = tokens['attention_mask'].unsqueeze(-1).expand(hidden_states.size())
+    masked_hidden_states = hidden_states * attention_mask_expanded
+    
+    # 2. Sum embeddings along the sequence length dimension (dim=1) to get the pooled vector
+    sum_embeddings = torch.sum(masked_hidden_states, dim=1) # Shape: (batch_size, hidden_size)
+    
+    # 3. Get the count of actual non-padding tokens per sequence.
+    # We sum the original attention mask along the sequence dimension (dim=1).
+    # keepdim=True ensures the result is (batch_size, 1), which broadcasts correctly for division.
+    num_actual_tokens_per_sequence = tokens['attention_mask'].sum(dim=1, keepdim=True) # Shape: (batch_size, 1)
+    
+    # Avoid division by zero for empty sequences or zero-token inputs
+    num_actual_tokens_per_sequence = torch.clamp(num_actual_tokens_per_sequence, min=1e-9)
     
     # Debug: Check values of hidden_states before masking - USE .detach()
     if hidden_states.numel() > 0:
         logging.info(f"{debug_prefix}Hidden States (sample 0, first 3 values): {hidden_states[0, 0, :3].detach().cpu().numpy()}")
         logging.info(f"{debug_prefix}Hidden States shape: {hidden_states.shape}")
     
-    # Mask out padding tokens (their hidden states become 0)
-    masked_hidden_states = hidden_states * attention_mask
-    
     # Debug: Check values of masked_hidden_states - USE .detach()
     if masked_hidden_states.numel() > 0:
         logging.info(f"{debug_prefix}Masked Hidden States (sample 0, first 3 values): {masked_hidden_states[0, 0, :3].detach().cpu().numpy()}")
 
-    # Sum embeddings and divide by the number of non-padding tokens
-    sum_embeddings = torch.sum(masked_hidden_states, dim=1)
-    num_non_padding = attention_mask.sum(dim=1)
-    
-    # Avoid division by zero for empty sequences or zero-token inputs
-    num_non_padding = torch.clamp(num_non_padding, min=1e-9)
-    
-    # Debug: Check num_non_padding - it's already a scalar or 1D tensor, direct item() is fine
-    logging.info(f"{debug_prefix}Num Non-Padding Tokens (first sample): {num_non_padding[0].item():.2f}")
+    # Debug: Check num_actual_tokens_per_sequence. Use .item() on the first element if it's a batch of 1, otherwise it's a 1D tensor.
+    # To be safe for general case, check its shape first.
+    if num_actual_tokens_per_sequence.numel() > 0:
+        if num_actual_tokens_per_sequence.ndim == 0: # If it's already a scalar (e.g., from batch_size=1)
+            logging.info(f"{debug_prefix}Num Non-Padding Tokens (first sample): {num_actual_tokens_per_sequence.item():.2f}")
+        else: # Otherwise, it's a tensor, take the first element
+            logging.info(f"{debug_prefix}Num Non-Padding Tokens (first sample): {num_actual_tokens_per_sequence[0].item():.2f}")
 
-    pooled_embeddings = sum_embeddings / num_non_padding
+
+    # Now perform the division to get mean-pooled embeddings
+    pooled_embeddings = sum_embeddings / num_actual_tokens_per_sequence
     
     # Debug: Check pooled_embeddings before normalization - USE .detach()
     if pooled_embeddings.numel() > 0:
@@ -157,8 +168,11 @@ def contrastive_loss_in_batch_negatives_vectorized(anchor_embs, positive_embs, m
         return torch.tensor(0.0, device=anchor_embs.device)
 
     # Calculate all-to-all cosine similarities within the batch
-    # sim_matrix[i, j] = cosine_similarity(anchor_embs[i], positive_embs[j])
-    sim_matrix = F.cosine_similarity(anchor_embs.unsqueeze(1), positive_embs.unsqueeze(0), dim=2)
+    # sim_matrix[i, j] = cosine_similarity(anchor_embs.unsqueeze(1), positive_embs.unsqueeze(0), dim=2)
+    
+    # Note: Use torch.matmul for cosine similarity with L2-normalized embeddings for performance
+    # This is equivalent to F.cosine_similarity if embeddings are already normalized.
+    sim_matrix = torch.matmul(anchor_embs, positive_embs.transpose(0, 1))
     
     # Get positive similarities: the diagonal of the similarity matrix
     pos_sim = torch.diag(sim_matrix) # Shape: (N,)
@@ -228,7 +242,7 @@ def main():
         tokenizer.pad_token = tokenizer.eos_token
         model.config.pad_token_id = tokenizer.eos_token_id
 
-    logging.info(f"Model loaded with {model.config.num_hidden_layers} layers.") # Added this logging line for clarity
+    logging.info(f"Model loaded with {model.config.num_hidden_layers} layers. Model config pad_token_id: {model.config.pad_token_id}") # Added pad_token_id to log
 
     # 2. Configure and Apply LoRA
     logging.info("Configuring LoRA adapters...")
@@ -311,7 +325,8 @@ def main():
             # --- DEBUGGING: Print similarities for first few batches ---
             if epoch == 0 and batch_idx < 5: # Only for first 5 batches of first epoch
                 # Calculate the similarities within this debug block
-                sim_matrix_debug = F.cosine_similarity(anchor_embs.unsqueeze(1), positive_embs.unsqueeze(0), dim=2)
+                # Using matmul now as suggested for normalized embeddings (more efficient)
+                sim_matrix_debug = torch.matmul(anchor_embs, positive_embs.transpose(0, 1))
                 pos_sim_debug = torch.diag(sim_matrix_debug)
                 neg_sim_matrix_debug = sim_matrix_debug.clone()
                 neg_sim_matrix_debug.fill_diagonal_(-float('inf'))
