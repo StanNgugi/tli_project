@@ -1,25 +1,56 @@
-# environment.yml
 name: tli_env
 channels:
-  - pytorch
-  - nvidia
-  - conda-forge
+  - pytorch # Prioritize official PyTorch builds, including CUDA dependencies
+  - nvidia  # Useful for specific NVIDIA CUDA toolkits or drivers if needed
+  - conda-forge # Robust community-driven channel with many scientific packages
+  - defaults # Default Conda channel, used as a fallback at lowest priority
+channel_priority: strict # Essential for faster dependency resolution and predictable package sourcing
+
 dependencies:
+  # Python version - align with your project's requirement
   - python=3.9
-  - pip
-  - numpy
-  - pandas
+
+  # Core Deep Learning Stack (Conda-first installations)
+  # Pinning major.minor versions for direct dependencies ensures reproducibility.
+  # IMPORTANT: Verify these versions are compatible with your *specific GPU*
+  # and each other using official documentation/compatibility matrices.
+  - pytorch=2.3.0         # Latest stable PyTorch version at the time of this guide
+  - torchvision=0.18.0    # PyTorch's vision library, compatible with PyTorch 2.3.0
+  - torchaudio=2.3.0      # PyTorch's audio library, compatible with PyTorch 2.3.0
+  - pytorch-cuda=12.1     # **CRUCIAL**: Specifies the CUDA toolkit version PyTorch was built against.
+                          # Ensure this matches your NVIDIA GPU driver capabilities.
+                          # Common options include 11.8, 12.1, 12.2.
+  - transformers=4.43.0   # Hugging Face Transformers. Version 4.40.0+ is required for Llama 3's
+                          # `rope_scaling` and other newer model architectures.
+  - accelerate=0.30.1     # Hugging Face Accelerate for distributed training.
+                          # Keep compatible with your `transformers` version.
+  - peft=0.11.1           # Parameter-Efficient Fine-Tuning (PEFT) library.
+                          # Keep compatible with your `transformers` version.
+  - bitsandbytes=0.43.1   # 8-bit optimization for LLMs. This version is generally
+                          # compatible with PyTorch 2.x and CUDA 12.x.
+                          # Ensure your GPU (NVIDIA A40 has CC 8.6) meets minimum compute capability.
+
+  # Common Data Science / LLM Utility Libraries (Conda-first where available)
   - scikit-learn
+  - pandas
+  - tqdm
+  - einops
   - matplotlib
-  - seaborn
-  - pytorch=2.1.0
-  - torchvision=0.16.0
-  - torchaudio=2.1.0
-  - pytorch-cuda=11.8 # Or match your CUDA version, e.g., 12.1. Crucial for bitsandbytes!
+  - scikit-image
+
+  # Temporary fix for NumPy 2.0 compatibility issues.
+  # Many downstream libraries (like older pandas, scipy) may not yet be fully compatible with NumPy 2.0.
+  # This constraint pins NumPy to a version less than 2.0 (e.g., 1.26.x).
+  # Remove this constraint once all your project's dependencies are verified to be
+  # fully compatible with NumPy 2.0 (check their release notes!).
+  - numpy<2.0
+
+  # Pip-installed packages
+  # These are packages that are typically not available via Conda channels,
+  # or are often preferred to be installed via Pip due to faster updates or specific builds.
   - pip:
-    - transformers==4.38.2
-    - peft==0.9.0
-    - accelerate==0.27.2
-    - bitsandbytes==0.42.0
-    - sentencepiece
-    - wandb # Optional: for logging, can be commented out
+    - sentence-transformers # Often easier to install directly via pip
+    - datasets              # Hugging Face Datasets library
+    # Add any other project-specific pip dependencies here
+    # Example: If you need a specific version of a package that's only on PyPI:
+    # - some-other-pip-package==1.2.3
