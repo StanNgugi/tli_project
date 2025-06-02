@@ -3,7 +3,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
-# ADDED AutoConfig here
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, get_linear_schedule_with_warmup, AutoConfig 
 from peft import get_peft_model, LoraConfig, TaskType
 import json
@@ -37,9 +36,6 @@ class TrainingConfig:
     
     # Contrastive Loss
     MARGIN = 0.4  # The 'alpha' margin in the triplet loss function
-    # TEMPERATURE = 1.0 # Optional: A 'temperature' parameter could be introduced for contrastive losses
-                      # to scale similarity scores, e.g., sim_score / TEMPERATURE.
-                      # Lower temp sharpens distribution, higher temp softens. Not used in standard triplet loss.
     
     # System
     OUTPUT_DIR = "./results/tli_lora_adapters"
@@ -77,21 +73,38 @@ def collate_fn(batch, tokenizer):
     return tokenized_anchors, tokenized_positives
 
 # --- Core Logic ---
-def get_pooled_embeddings(tokens, model, layer_idx):
+def get_pooled_embeddings(tokens, model, layer_idx, debug_prefix=""): # Added debug_prefix
     """
     Pass tokens through model and get mean-pooled embeddings from target layer.
     Embeddings are L2 normalized *before* returning.
     """
     tokens = {k: v.to(model.device) for k, v in tokens.items()}
-    # REMOVED: with torch.no_grad():
+    
+    # Debug: Print input_ids and attention_mask
+    if tokens['input_ids'].size(0) > 0: # Ensure batch is not empty
+        logging.info(f"{debug_prefix}Input IDs: {tokens['input_ids'][0, :5].cpu().numpy()}...") # First 5 tokens of first sample
+        logging.info(f"{debug_prefix}Attention Mask: {tokens['attention_mask'][0, :5].cpu().numpy()}...") # First 5 mask values
+    else:
+        logging.warning(f"{debug_prefix}Empty batch received by get_pooled_embeddings.")
+        return None
+
     outputs = model(**tokens, output_hidden_states=True)
     
     hidden_states = outputs.hidden_states[layer_idx] # (batch_size, sequence_length, hidden_size)
     attention_mask = tokens['attention_mask'].unsqueeze(-1).expand(hidden_states.size())
     
+    # Debug: Check values of hidden_states before masking
+    if hidden_states.numel() > 0:
+        logging.info(f"{debug_prefix}Hidden States (sample 0, first 3 values): {hidden_states[0, 0, :3].cpu().numpy()}")
+        logging.info(f"{debug_prefix}Hidden States shape: {hidden_states.shape}")
+    
     # Mask out padding tokens (their hidden states become 0)
     masked_hidden_states = hidden_states * attention_mask
     
+    # Debug: Check values of masked_hidden_states
+    if masked_hidden_states.numel() > 0:
+        logging.info(f"{debug_prefix}Masked Hidden States (sample 0, first 3 values): {masked_hidden_states[0, 0, :3].cpu().numpy()}")
+
     # Sum embeddings and divide by the number of non-padding tokens
     sum_embeddings = torch.sum(masked_hidden_states, dim=1)
     num_non_padding = attention_mask.sum(dim=1)
@@ -99,10 +112,25 @@ def get_pooled_embeddings(tokens, model, layer_idx):
     # Avoid division by zero for empty sequences or zero-token inputs
     num_non_padding = torch.clamp(num_non_padding, min=1e-9)
     
+    # Debug: Check num_non_padding
+    logging.info(f"{debug_prefix}Num Non-Padding Tokens (first sample): {num_non_padding[0].item():.2f}")
+
     pooled_embeddings = sum_embeddings / num_non_padding
     
+    # Debug: Check pooled_embeddings before normalization
+    if pooled_embeddings.numel() > 0:
+        logging.info(f"{debug_prefix}Pooled Embeddings (sample 0, first 3 values): {pooled_embeddings[0, :3].cpu().numpy()}")
+        logging.info(f"{debug_prefix}Pooled Embedding Norm (sample 0, pre-norm): {torch.norm(pooled_embeddings[0]).item():.4f}")
+
+
     # L2 Normalize embeddings before returning. This is crucial for cosine similarity.
     normalized_embeddings = F.normalize(pooled_embeddings, p=2, dim=1) # Normalize along embedding dimension
+    
+    # Debug: Check normalized_embeddings
+    if normalized_embeddings.numel() > 0:
+        logging.info(f"{debug_prefix}Normalized Embeddings (sample 0, first 3 values): {normalized_embeddings[0, :3].cpu().numpy()}")
+        logging.info(f"{debug_prefix}Normalized Embedding Norm (sample 0, post-norm): {torch.norm(normalized_embeddings[0]).item():.4f}")
+
     return normalized_embeddings
 
 def contrastive_loss_in_batch_negatives_vectorized(anchor_embs, positive_embs, margin):
@@ -270,9 +298,14 @@ def main():
             optimizer.zero_grad()
             
             # --- FORWARD PASS (Embeddings are normalized inside get_pooled_embeddings) ---
-            anchor_embs = get_pooled_embeddings(batch[0], model, config.TARGET_LAYER)
-            positive_embs = get_pooled_embeddings(batch[1], model, config.TARGET_LAYER)
+            anchor_embs = get_pooled_embeddings(batch[0], model, config.TARGET_LAYER, debug_prefix="Anchor Embeddings: ")
+            positive_embs = get_pooled_embeddings(batch[1], model, config.TARGET_LAYER, debug_prefix="Positive Embeddings: ")
             
+            # Ensure embeddings were retrieved successfully
+            if anchor_embs is None or positive_embs is None:
+                logging.warning(f"Skipping batch {batch_idx} due to empty embeddings.")
+                continue
+
             # --- DEBUGGING: Print similarities for first few batches ---
             if epoch == 0 and batch_idx < 5: # Only for first 5 batches of first epoch
                 # Calculate the similarities within this debug block
