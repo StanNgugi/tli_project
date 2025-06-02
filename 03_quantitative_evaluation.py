@@ -14,7 +14,7 @@ from utils import load_model, get_word_embedding
 
 # --- Configuration ---
 class EvalConfig:
-    MODEL_ID = "LughaRAG/LughaLlama-8B-wura"
+    MODEL_ID = "Lugha-Llama/Lugha-Llama-8B-wura"
     # 🎯 Path to your trained LoRA adapters
     ADAPTER_PATH = "./results/tli_lora_adapters/final/" # Ensure this path is correct
     

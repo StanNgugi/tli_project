@@ -11,7 +11,7 @@ from utils import load_model
 
 # --- Configuration ---
 class ProbeConfig:
-    MODEL_ID = "LughaRAG/LughaLlama-8B-wura"
+    MODEL_ID = "Lugha-Llama/Lugha-Llama-8B-wura"
     ADAPTER_PATH = "./results/tli_lora_adapters/final/" # Ensure this path is correct
     WORD_PAIRS_PATH = "./data/word_pairs.json"
     

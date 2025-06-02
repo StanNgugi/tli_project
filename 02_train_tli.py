@@ -15,7 +15,7 @@ import math
 # --- Configuration ---
 class TrainingConfig:
     # Model and Data
-    MODEL_ID = "LughaRAG/LughaLlama-8B-wura"
+    MODEL_ID = "Lugha-Llama/Lugha-Llama-8B-wura"
     WORD_PAIRS_PATH = "./data/word_pairs.json"
     
     # Determined from 01_pilot_layer_selection.py

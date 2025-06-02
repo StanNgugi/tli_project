@@ -11,7 +11,7 @@ import os
 import logging
 
 # --- Configuration ---
-MODEL_ID = "LughaRAG/LughaLlama-8B-wura"
+MODEL_ID = "Lugha-Llama/Lugha-Llama-8B-wura"
 WORD_PAIRS_PATH = "./data/word_pairs.json"
 OUTPUT_DIR = "./results/pilot_study"
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
