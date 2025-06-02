@@ -65,7 +65,8 @@ def collate_fn(batch, tokenizer):
     Tokenizes a batch of Swahili anchors and English positives.
     """
     anchors = [item['anchor_sw'] for item in batch]
-    positives = [item['positive['] for item in batch] # Corrected typo here, was 'positives[']'
+    # CORRECTED: Changed 'positive[' to 'positive_en'
+    positives = [item['positive_en'] for item in batch]
     
     tokenized_anchors = tokenizer(anchors, padding=True, truncation=True, return_tensors="pt")
     tokenized_positives = tokenizer(positives, padding=True, truncation=True, return_tensors="pt")
